@@ -4,18 +4,28 @@
 
 # ── 环境变量（含 API Key，绝对不能提交）──
 .env
+.envrc
 
-# ── Python ──
+# ── Python 字节码 ──
 __pycache__/
-*.pyc
-*.pyo
-*.egg-info/
-dist/
+*.py[codz]
+*$py.class
+
+# ── 分发 / 打包 ──
 build/
+develop-eggs/
+dist/
+eggs/
+.eggs/
+*.egg-info/
+.installed.cfg
+*.egg
 
 # ── 虚拟环境 ──
 .venv/
 venv/
+env/
+ENV/
 
 # ── 向量数据库（体积大，运行时生成）──
 data/chroma_db/
@@ -29,17 +39,26 @@ data/agent_logs/
 *.log
 server.log
 
+# ── 测试 / 覆盖率 ──
+htmlcov/
+.coverage
+.coverage.*
+.pytest_cache/
+cover/
+
 # ── IDE ──
 .vscode/
 .idea/
+.spyderproject
+.spyproject
 
 # ── OS ──
 Thumbs.db
 .DS_Store
 
-# ── Docker ──
-.dockerignore
-
 # ── 临时文件 ──
 *.tmp
 checkpoint_results.json
+
+# ── Docker ──
+.dockerignore

@@ -10,6 +10,9 @@ RAG 问答 API — FastAPI 服务
     python main.py
 """
 
+from dotenv import load_dotenv
+load_dotenv()
+
 import os
 from contextlib import asynccontextmanager
 from typing import Optional
