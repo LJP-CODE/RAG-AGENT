@@ -1,0 +1,1 @@
+This is the 6th test file, used for batch reading experiments.

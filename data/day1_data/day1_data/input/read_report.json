@@ -1,0 +1,610 @@
+{
+  "input_dir": "D:\\AI agent\\content one\\day_1data\\day1_data\\input",
+  "total_files": 100,
+  "success_count": 100,
+  "failure_count": 0,
+  "total_elapsed_seconds": 0.026859,
+  "success_files": [
+    {
+      "file": "file_001.txt",
+      "status": "success",
+      "size_bytes": 63,
+      "elapsed_seconds": 0.000328
+    },
+    {
+      "file": "file_002.txt",
+      "status": "success",
+      "size_bytes": 63,
+      "elapsed_seconds": 0.000268
+    },
+    {
+      "file": "file_003.txt",
+      "status": "success",
+      "size_bytes": 63,
+      "elapsed_seconds": 0.000249
+    },
+    {
+      "file": "file_004.txt",
+      "status": "success",
+      "size_bytes": 63,
+      "elapsed_seconds": 0.000261
+    },
+    {
+      "file": "file_005.txt",
+      "status": "success",
+      "size_bytes": 63,
+      "elapsed_seconds": 0.000251
+    },
+    {
+      "file": "file_006.txt",
+      "status": "success",
+      "size_bytes": 63,
+      "elapsed_seconds": 0.000254
+    },
+    {
+      "file": "file_007.txt",
+      "status": "success",
+      "size_bytes": 63,
+      "elapsed_seconds": 0.000249
+    },
+    {
+      "file": "file_008.txt",
+      "status": "success",
+      "size_bytes": 63,
+      "elapsed_seconds": 0.000252
+    },
+    {
+      "file": "file_009.txt",
+      "status": "success",
+      "size_bytes": 63,
+      "elapsed_seconds": 0.000244
+    },
+    {
+      "file": "file_010.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.000295
+    },
+    {
+      "file": "file_011.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.000272
+    },
+    {
+      "file": "file_012.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.000251
+    },
+    {
+      "file": "file_013.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.000264
+    },
+    {
+      "file": "file_014.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.000249
+    },
+    {
+      "file": "file_015.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.000257
+    },
+    {
+      "file": "file_016.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.000251
+    },
+    {
+      "file": "file_017.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.000244
+    },
+    {
+      "file": "file_018.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.000248
+    },
+    {
+      "file": "file_019.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.000244
+    },
+    {
+      "file": "file_020.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.000247
+    },
+    {
+      "file": "file_021.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.000253
+    },
+    {
+      "file": "file_022.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.000244
+    },
+    {
+      "file": "file_023.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.000245
+    },
+    {
+      "file": "file_024.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.00025
+    },
+    {
+      "file": "file_025.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.000245
+    },
+    {
+      "file": "file_026.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.000241
+    },
+    {
+      "file": "file_027.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.000247
+    },
+    {
+      "file": "file_028.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.000243
+    },
+    {
+      "file": "file_029.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.000255
+    },
+    {
+      "file": "file_030.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.000245
+    },
+    {
+      "file": "file_031.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.000243
+    },
+    {
+      "file": "file_032.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.000241
+    },
+    {
+      "file": "file_033.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.000241
+    },
+    {
+      "file": "file_034.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.00024
+    },
+    {
+      "file": "file_035.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.00024
+    },
+    {
+      "file": "file_036.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.00025
+    },
+    {
+      "file": "file_037.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.000247
+    },
+    {
+      "file": "file_038.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.000249
+    },
+    {
+      "file": "file_039.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.000239
+    },
+    {
+      "file": "file_040.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.000243
+    },
+    {
+      "file": "file_041.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.000257
+    },
+    {
+      "file": "file_042.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.00031
+    },
+    {
+      "file": "file_043.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.000269
+    },
+    {
+      "file": "file_044.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.000337
+    },
+    {
+      "file": "file_045.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.000263
+    },
+    {
+      "file": "file_046.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.000277
+    },
+    {
+      "file": "file_047.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.000248
+    },
+    {
+      "file": "file_048.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.000246
+    },
+    {
+      "file": "file_049.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.000248
+    },
+    {
+      "file": "file_050.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.000254
+    },
+    {
+      "file": "file_051.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.000252
+    },
+    {
+      "file": "file_052.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.000247
+    },
+    {
+      "file": "file_053.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.000248
+    },
+    {
+      "file": "file_054.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.00025
+    },
+    {
+      "file": "file_055.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.000248
+    },
+    {
+      "file": "file_056.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.000244
+    },
+    {
+      "file": "file_057.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.000255
+    },
+    {
+      "file": "file_058.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.000246
+    },
+    {
+      "file": "file_059.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.000253
+    },
+    {
+      "file": "file_060.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.000283
+    },
+    {
+      "file": "file_061.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.000242
+    },
+    {
+      "file": "file_062.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.000253
+    },
+    {
+      "file": "file_063.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.00028
+    },
+    {
+      "file": "file_064.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.000252
+    },
+    {
+      "file": "file_065.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.00025
+    },
+    {
+      "file": "file_066.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.000243
+    },
+    {
+      "file": "file_067.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.000252
+    },
+    {
+      "file": "file_068.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.000243
+    },
+    {
+      "file": "file_069.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.000247
+    },
+    {
+      "file": "file_070.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.000248
+    },
+    {
+      "file": "file_071.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.000259
+    },
+    {
+      "file": "file_072.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.000256
+    },
+    {
+      "file": "file_073.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.000249
+    },
+    {
+      "file": "file_074.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.000394
+    },
+    {
+      "file": "file_075.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.000278
+    },
+    {
+      "file": "file_076.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.000263
+    },
+    {
+      "file": "file_077.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.000256
+    },
+    {
+      "file": "file_078.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.000293
+    },
+    {
+      "file": "file_079.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.000254
+    },
+    {
+      "file": "file_080.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.000353
+    },
+    {
+      "file": "file_081.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.00033
+    },
+    {
+      "file": "file_082.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.000269
+    },
+    {
+      "file": "file_083.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.000254
+    },
+    {
+      "file": "file_084.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.000253
+    },
+    {
+      "file": "file_085.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.000257
+    },
+    {
+      "file": "file_086.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.000247
+    },
+    {
+      "file": "file_087.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.000244
+    },
+    {
+      "file": "file_088.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.000253
+    },
+    {
+      "file": "file_089.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.000348
+    },
+    {
+      "file": "file_090.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.000246
+    },
+    {
+      "file": "file_091.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.000249
+    },
+    {
+      "file": "file_092.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.000247
+    },
+    {
+      "file": "file_093.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.000244
+    },
+    {
+      "file": "file_094.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.000247
+    },
+    {
+      "file": "file_095.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.000252
+    },
+    {
+      "file": "file_096.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.000245
+    },
+    {
+      "file": "file_097.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.000246
+    },
+    {
+      "file": "file_098.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.000246
+    },
+    {
+      "file": "file_099.txt",
+      "status": "success",
+      "size_bytes": 64,
+      "elapsed_seconds": 0.000245
+    },
+    {
+      "file": "file_100.txt",
+      "status": "success",
+      "size_bytes": 65,
+      "elapsed_seconds": 0.000246
+    }
+  ],
+  "failed_files": []
+}

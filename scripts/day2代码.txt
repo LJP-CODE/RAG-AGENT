@@ -1,0 +1,591 @@
+import json
+import time
+from pathlib import Path
+from typing import Optional
+
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+from langchain_community.vectorstores import Chroma
+from langchain_classic.chains import RetrievalQA
+from langchain_classic.callbacks.base import BaseCallbackHandler
+from langchain_classic.schema import LLMResult
+
+# ============================================================
+# 0. 配置区（请在此修改路径和密钥）
+# ============================================================
+
+# --- 知识库文件路径 ---
+KNOWLEDGE_FILE = "data_2data/knowledge.txt"
+
+# --- 向量数据库持久化目录 ---
+CHROMA_PERSIST_DIR = "data_2data/chroma_db"
+
+# --- Embedding 选择 ---
+# "huggingface" — 免费本地模型（默认，推荐，无需 Key）
+# "openai"      — OpenAI text-embedding-ada-002（需 Key 并付费）
+EMBEDDING_PROVIDER = "huggingface"
+
+# --- LLM 配置 ---
+# 当前支持: "deepseek"（默认）, "openai"
+LLM_PROVIDER = "deepseek"
+
+# ==== DeepSeek 配置 ====
+DEEPSEEK_API_KEY = "你的DeepSeek密钥"   # 请替换为你的 DeepSeek Key
+DEEPSEEK_API_BASE = "https://api.deepseek.com"   # DeepSeek 接口地址
+DEEPSEEK_MODEL = "deepseek-v4-flash"               # deepseek-v4-flash 或 deepseek-chat(V3)
+
+# ==== OpenAI 配置（如 LLM_PROVIDER="openai" 时使用）====
+OPENAI_API_KEY = "sk-your-openai-api-key"
+OPENAI_API_BASE = ""             # 如使用代理或中转站，在这里填地址
+OPENAI_MODEL = "gpt-4o-mini"
+
+# --- 检索参数 ---
+CHUNK_SIZE = 256
+CHUNK_OVERLAP = 128
+TOP_K = 5
+
+# --- 输出报告路径 ---
+REPORT_PATH = "rag_report.json"
+
+
+# ============================================================
+# 1. Token 统计回调
+# ============================================================
+
+class TokenCounterCallback(BaseCallbackHandler):
+    """LangChain 回调，追踪 LLM 调用的 token 用量。"""
+
+    def __init__(self):
+        self.prompt_tokens = 0
+        self.completion_tokens = 0
+
+    def on_llm_start(self, serialized, prompts, **kwargs):
+        """LLM 开始调用时记录。"""
+        pass
+
+    def on_llm_end(self, response: LLMResult, **kwargs):
+        """LLM 返回结果时记录 token 数。"""
+        for generation in response.generations:
+            for gen in generation:
+                if gen.message is not None and gen.message.response_metadata:
+                    usage = gen.message.response_metadata.get("token_usage", {})
+                    if usage:
+                        self.prompt_tokens += usage.get("prompt_tokens", 0)
+                        self.completion_tokens += usage.get("completion_tokens", 0)
+
+    @property
+    def total_tokens(self):
+        return self.prompt_tokens + self.completion_tokens
+
+
+# ============================================================
+# 2. 文档加载
+# ============================================================
+
+def load_document(file_path: str) -> str:
+    """
+    读取 TXT 文件内容。
+
+    参数:
+        file_path: TXT 文件路径
+
+    返回:
+        文件完整文本
+    """
+    file_path = Path(file_path)
+    if not file_path.exists():
+        raise FileNotFoundError(f"知识库文件不存在: {file_path.resolve()}")
+
+    with file_path.open("r", encoding="utf-8") as f:
+        text = f.read()
+
+    print(f"  [加载] 文件: {file_path.name}")
+    print(f"  [加载] 大小: {len(text):,} 字符 / {len(text.encode('utf-8')):,} 字节")
+    return text
+
+
+# ============================================================
+# 3. 文本分块
+# ============================================================
+
+def split_text(text: str, chunk_size: int, chunk_overlap: int) -> list:
+    """
+    将长文本递归分割成块。
+
+    使用 RecursiveCharacterTextSplitter，天然适合中文：
+    按 [\n\n, \n, 。, ., 空格] 优先级分割。
+
+    参数:
+        text:            原始文本
+        chunk_size:      每块最大字符数
+        chunk_overlap:   相邻块重叠字符数
+
+    返回:
+        文档块列表（每个元素是 LangChain Document 对象）
+    """
+    splitter = RecursiveCharacterTextSplitter(
+        chunk_size=chunk_size,
+        chunk_overlap=chunk_overlap,
+        separators=["\n\n", "\n", "。", "！", "？", "；", "，", "、", " ", ""],
+        length_function=len,
+    )
+
+    docs = splitter.create_documents([text])
+    print(f"  [分块] 共生成 {len(docs):,} 个文档块")
+    print(f"  [分块] chunk_size={chunk_size}, overlap={chunk_overlap}")
+    return docs
+
+
+# ============================================================
+# 4. Embedding 函数
+# ============================================================
+
+def get_embedding_function(provider: str):
+    """
+    返回 Embedding 模型实例。
+
+    免费方案推荐（二选一）:
+      1. BAAI/bge-small-zh-v1.5
+         - 北京智源研究院出品，中英文双语
+         - 向量维度 512，速度较快
+         - pip install sentence-transformers 后自动下载模型
+         - 首次运行自动下载模型（约 33MB）
+
+      2. text2vec-base-chinese
+         - 专门针对中文优化
+         - 向量维度 768
+         - 对中文语义理解更细腻
+
+    OpenAI 方案:
+      3. text-embedding-ada-002
+         - 向量维度 1536
+         - 质量最高，但每次调用需要 API Key 并计费
+    """
+    if provider == "huggingface":
+        from langchain_community.embeddings import HuggingFaceEmbeddings
+
+        # ===== 免费模型选择 =====
+        # 选项 A：BGE 小模型（推荐，速度快效果好）
+        model_name = "BAAI/bge-small-zh-v1.5"
+
+        # 选项 B：纯中文优化模型（取消下面注释即可切换）
+        # model_name = "shibing624/text2vec-base-chinese"
+
+        print(f"  [嵌入] 使用免费本地模型: {model_name}")
+        print(f"  [嵌入] 首次运行会自动下载模型（约 30-50MB）...")
+
+        return HuggingFaceEmbeddings(
+            model_name=model_name,
+            model_kwargs={"device": "cpu"},
+            encode_kwargs={"normalize_embeddings": True},    # 归一化后余弦相似度 = 点积
+        )
+
+    elif provider == "openai":
+        from langchain_openai import OpenAIEmbeddings
+
+        if not OPENAI_API_KEY:
+            raise ValueError("请先设置 OPENAI_API_KEY 环境变量或在 .env 文件中配置")
+
+        kwargs = {"model": "text-embedding-ada-002", "api_key": OPENAI_API_KEY}
+        if OPENAI_API_BASE:
+            kwargs["api_base"] = OPENAI_API_BASE
+
+        print(f"  [嵌入] 使用 OpenAI: text-embedding-ada-002")
+        return OpenAIEmbeddings(**kwargs)
+
+    else:
+        raise ValueError(f"不支持的 Embedding 提供商: {provider}，可选 'huggingface' 或 'openai'")
+
+
+# ============================================================
+# 5. 构建 Chroma 向量库
+# ============================================================
+
+def build_vector_store(docs: list, embedding_fn, persist_dir: str) -> Chroma:
+    """
+    将文档块向量化并存入 Chroma。
+
+    参数:
+        docs:          文档块列表
+        embedding_fn:  Embedding 模型实例
+        persist_dir:   持久化目录
+
+    返回:
+        Chroma 向量库实例
+    """
+    persist_path = Path(persist_dir)
+
+    print(f"  [向量] 持久化目录: {persist_path.resolve()}")
+
+    vector_store = Chroma.from_documents(
+        documents=docs,
+        embedding=embedding_fn,
+        persist_directory=str(persist_path),
+    )
+
+    # Chroma 0.4+ 自动持久化，无需显式调用 persist()
+    print(f"  [向量] 向量库构建完成")
+    return vector_store
+
+
+# ============================================================
+# 6. 初始化 LLM
+# ============================================================
+
+def init_llm(provider: str, callback: TokenCounterCallback):
+    """
+    初始化大语言模型。
+
+    DeepSeek 使用 OpenAI 兼容接口，所以底层都走 ChatOpenAI，
+    只是 base_url 和 model 名称不同。
+
+    参数:
+        provider: "deepseek" 或 "openai"
+        callback: Token 统计回调
+
+    返回:
+        LLM 实例
+    """
+    from langchain_openai import ChatOpenAI
+
+    if provider == "deepseek":
+        if not DEEPSEEK_API_KEY:
+            raise ValueError("请先设置 DEEPSEEK_API_KEY 环境变量或在 .env 文件中配置")
+
+        llm = ChatOpenAI(
+            model=DEEPSEEK_MODEL,
+            api_key=DEEPSEEK_API_KEY,
+            base_url=DEEPSEEK_API_BASE,
+            temperature=0.1,
+            callbacks=[callback],
+        )
+        print(f"  [LLM] 提供商: DeepSeek | 模型: {DEEPSEEK_MODEL}")
+        return llm
+
+    elif provider == "openai":
+        if not OPENAI_API_KEY:
+            raise ValueError("请先设置 OPENAI_API_KEY 环境变量或在 .env 文件中配置")
+
+        kwargs = {
+            "model": OPENAI_MODEL,
+            "api_key": OPENAI_API_KEY,
+            "temperature": 0.1,
+            "callbacks": [callback],
+        }
+        if OPENAI_API_BASE:
+            kwargs["base_url"] = OPENAI_API_BASE
+
+        print(f"  [LLM] 提供商: OpenAI | 模型: {OPENAI_MODEL}")
+        return ChatOpenAI(**kwargs)
+
+    else:
+        raise ValueError(f"不支持的 LLM 提供商: {provider}，可选 'deepseek' 或 'openai'")
+
+
+# ============================================================
+# 7. 构建检索问答链
+# ============================================================
+
+def build_qa_chain(llm, vector_store):
+    """
+    构建检索问答链。
+    """
+    retriever = vector_store.as_retriever(
+        search_type="similarity",
+        search_kwargs={"k": TOP_K},
+    )
+
+    qa_chain = RetrievalQA.from_chain_type(
+        llm=llm,
+        chain_type="stuff",                 # 将检索结果拼入 prompt 中
+        retriever=retriever,
+        return_source_documents=True,       # 返回来源文档块，便于分析
+        verbose=False,
+    )
+
+    print(f"  [检索] Top-K: {TOP_K}")
+    return qa_chain
+
+
+# ============================================================
+# 8. 执行问答并记录指标
+# ============================================================
+
+def ask_question(qa_chain, question: str, token_counter: TokenCounterCallback):
+    """
+    执行一次问答：检索 → 生成 → 记录指标。
+
+    参数:
+        qa_chain:       检索问答链
+        question:       用户问题
+        token_counter:  Token 计数器（调用前重置）
+
+    返回:
+        result: 包含答案和指标的字典
+    """
+    # --- 阶段1: 检索 ---
+    # 先单独检索，获取检索耗时和文档块数量
+    retriever = qa_chain.retriever
+
+    start_retrieval = time.time()
+    retrieved_docs = retriever.invoke(question)
+    retrieval_time = time.time() - start_retrieval
+
+    # --- 阶段2: 生成 ---
+    token_counter.prompt_tokens = 0
+    token_counter.completion_tokens = 0
+
+    start_generation = time.time()
+    response = qa_chain.invoke({"query": question})
+    generation_time = time.time() - start_generation
+
+    # --- 阶段3: 汇总 ---
+    total_time = retrieval_time + generation_time
+
+    result = {
+        "question": question,
+        "answer": response.get("result", ""),
+        "retrieval_time_seconds": round(retrieval_time, 4),
+        "generation_time_seconds": round(generation_time, 4),
+        "total_time_seconds": round(total_time, 4),
+        "retrieved_chunks": len(retrieved_docs),
+        "prompt_tokens": token_counter.prompt_tokens,
+        "completion_tokens": token_counter.completion_tokens,
+        "total_tokens": token_counter.total_tokens,
+        "retrieved_sources": [
+            {
+                "index": i + 1,
+                "content_preview": doc.page_content[:150] + "...",
+                "char_count": len(doc.page_content),
+            }
+            for i, doc in enumerate(retrieved_docs)
+        ],
+    }
+
+    return result
+
+
+# ============================================================
+# 9. 运行管道（主流程）
+# ============================================================
+
+def run_pipeline(questions: Optional[list[str]] = None):
+    """
+    运行完整的 RAG 管道。
+
+    参数:
+        questions: 问题列表。为 None 则使用内置示例问题。
+    """
+    if questions is None:
+        questions = [
+            "显卡PCB一般有多少层？各层结构是怎样的？",
+            "什么是底部填充胶？它起什么作用？",
+            "显存和数据线之间为什么要等长绕线？",
+        ]
+
+    print("\n" + "=" * 60)
+    print("  RAG 管道启动")
+    print("=" * 60 + "\n")
+
+    overall_start = time.time()
+
+    # ---------- 1. 加载 ----------
+    print(">>> 第一步：加载文档")
+    text = load_document(KNOWLEDGE_FILE)
+
+    # ---------- 2. 分块 ----------
+    print("\n>>> 第二步：文本分块")
+    docs = split_text(text, CHUNK_SIZE, CHUNK_OVERLAP)
+
+    # ---------- 3. Embedding ----------
+    print("\n>>> 第三步：初始化 Embedding 模型")
+    embedding_fn = get_embedding_function(EMBEDDING_PROVIDER)
+
+    # ---------- 4. 向量库 ----------
+    print("\n>>> 第四步：构建 / 加载 Chroma 向量库")
+    vector_store = build_vector_store(docs, embedding_fn, CHROMA_PERSIST_DIR)
+
+    # ---------- 5. 初始化 LLM ----------
+    print("\n>>> 第五步：初始化 LLM")
+    token_counter = TokenCounterCallback()
+    llm = init_llm(LLM_PROVIDER, token_counter)
+
+    # ---------- 6. 构建检索链 ----------
+    print("\n>>> 第六步：构建检索问答链")
+    qa_chain = build_qa_chain(llm, vector_store)
+
+    # ---------- 7. 问答循环 ----------
+    print("\n" + "=" * 60)
+    print("  开始问答")
+    print("=" * 60 + "\n")
+
+    all_results = []
+    for i, question in enumerate(questions, 1):
+        print(f"--- 问题 {i}/{len(questions)} ---")
+        print(f"  Q: {question}")
+        print()
+
+        result = ask_question(qa_chain, question, token_counter)
+
+        print(f"  A: {result['answer'][:300]}...")
+        print()
+        print(f"  检索耗时:    {result['retrieval_time_seconds']:.4f}s")
+        print(f"  生成耗时:    {result['generation_time_seconds']:.4f}s")
+        print(f"  总耗时:      {result['total_time_seconds']:.4f}s")
+        print(f"  检索到块数:  {result['retrieved_chunks']}")
+        print(f"  Token 消耗:  prompt={result['prompt_tokens']}, "
+              f"completion={result['completion_tokens']}, "
+              f"总计={result['total_tokens']}")
+        print("-" * 50)
+        print()
+
+        all_results.append(result)
+
+    # ---------- 8. 统计报告 ----------
+    total_retrieval = sum(r["retrieval_time_seconds"] for r in all_results)
+    total_generation = sum(r["generation_time_seconds"] for r in all_results)
+    total_questions = sum(r["total_time_seconds"] for r in all_results)
+    total_tokens = sum(r["total_tokens"] for r in all_results)
+
+    report = {
+        "config": {
+            "knowledge_file": KNOWLEDGE_FILE,
+            "chunk_size": CHUNK_SIZE,
+            "chunk_overlap": CHUNK_OVERLAP,
+            "top_k": TOP_K,
+            "embedding_provider": EMBEDDING_PROVIDER,
+            "llm_provider": LLM_PROVIDER,
+            "llm_model": {
+                "deepseek": DEEPSEEK_MODEL,
+                "openai": OPENAI_MODEL,
+            }.get(LLM_PROVIDER),
+        },
+        "knowledge_base": {
+            "total_chars": len(text),
+            "total_bytes": len(text.encode("utf-8")),
+            "total_chunks": len(docs),
+        },
+        "pipeline_time_seconds": {
+            "total_retrieval_time": round(total_retrieval, 4),
+            "total_generation_time": round(total_generation, 4),
+            "total_qa_time": round(total_questions, 4),
+            "overall_elapsed": round(time.time() - overall_start, 4),
+        },
+        "token_usage": {
+            "total_prompt_tokens": sum(r["prompt_tokens"] for r in all_results),
+            "total_completion_tokens": sum(r["completion_tokens"] for r in all_results),
+            "total_tokens": total_tokens,
+        },
+        "questions": [
+            {
+                "question": r["question"],
+                "answer": r["answer"],
+                "retrieval_time_seconds": r["retrieval_time_seconds"],
+                "generation_time_seconds": r["generation_time_seconds"],
+                "total_time_seconds": r["total_time_seconds"],
+                "retrieved_chunks": r["retrieved_chunks"],
+                "prompt_tokens": r["prompt_tokens"],
+                "completion_tokens": r["completion_tokens"],
+                "total_tokens": r["total_tokens"],
+                "sources": r["retrieved_sources"],
+            }
+            for r in all_results
+        ],
+    }
+
+    # 写入 JSON 报告
+    report_path = Path(REPORT_PATH)
+    report_path.parent.mkdir(parents=True, exist_ok=True)
+    with report_path.open("w", encoding="utf-8") as f:
+        json.dump(report, f, ensure_ascii=False, indent=2)
+
+    # 打印汇总
+    print("\n" + "=" * 60)
+    print("  统计报告")
+    print("=" * 60)
+    print(f"  知识库字符数:      {report['knowledge_base']['total_chars']:,}")
+    print(f"  文档块总数:        {report['knowledge_base']['total_chunks']:,}")
+    print(f"  问答总数:          {len(all_results)}")
+    print(f"  累计检索耗时:      {total_retrieval:.4f}s")
+    print(f"  累计生成耗时:      {total_generation:.4f}s")
+    print(f"  总 Token 消耗:     {total_tokens:,}")
+    print(f"  管道总耗时:        {report['pipeline_time_seconds']['overall_elapsed']:.4f}s")
+    print(f"  报告已保存至:      {report_path.resolve()}")
+    print("=" * 60)
+    print("  完成！\n")
+
+    return report
+
+
+# ============================================================
+# 10. 交互式问答入口
+# ============================================================
+
+def interactive_mode():
+    """
+    交互式问答模式。
+    先构建管道，然后不断接收用户提问。
+    """
+    print("\n" + "=" * 60)
+    print("  交互式 RAG 问答模式")
+    print("=" * 60 + "\n")
+
+    # ---- 构建阶段（只做一次） ----
+    print(">>> 正在构建 RAG 管道...\n")
+
+    text = load_document(KNOWLEDGE_FILE)
+    docs = split_text(text, CHUNK_SIZE, CHUNK_OVERLAP)
+    embedding_fn = get_embedding_function(EMBEDDING_PROVIDER)
+    vector_store = build_vector_store(docs, embedding_fn, CHROMA_PERSIST_DIR)
+    token_counter = TokenCounterCallback()
+    llm = init_llm(LLM_PROVIDER, token_counter)
+    qa_chain = build_qa_chain(llm, vector_store)
+
+    print("\n" + "=" * 60)
+    print("  管道就绪！输入你的问题（输入 q 退出）")
+    print("=" * 60 + "\n")
+
+    all_results = []
+
+    while True:
+        try:
+            question = input("问题 > ").strip()
+        except (EOFError, KeyboardInterrupt):
+            break
+
+        if not question:
+            continue
+        if question.lower() in ("q", "quit", "exit"):
+            break
+
+        print()
+        result = ask_question(qa_chain, question, token_counter)
+
+        print(f"回答:\n{result['answer']}")
+        print()
+        print(f"  [指标] 检索={result['retrieval_time_seconds']:.4f}s | "
+              f"生成={result['generation_time_seconds']:.4f}s | "
+              f"总计={result['total_time_seconds']:.4f}s | "
+              f"块数={result['retrieved_chunks']} | "
+              f"Token={result['total_tokens']}")
+        print("-" * 50)
+        print()
+
+        all_results.append(result)
+
+    # 退出时打印汇总
+    if all_results:
+        total_tokens = sum(r["total_tokens"] for r in all_results)
+        print(f"\n本次会话共 {len(all_results)} 个问题，总计消耗 {total_tokens} Tokens\n")
+
+
+# ============================================================
+# 11. 入口
+# ============================================================
+
+if __name__ == "__main__":
+    import sys
+
+    # 检查是否有命令行参数，如果有则作为自定义问题
+    # 用法: python rag_pipeline.py "问题1" "问题2"
+    custom_questions = sys.argv[1:] if len(sys.argv) > 1 else None
+    run_pipeline(custom_questions)

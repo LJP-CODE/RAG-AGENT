@@ -1,0 +1,1644 @@
+{
+  "config": {
+    "chunk_size": 256,
+    "chunk_overlap": 128,
+    "top_k_no_rerank": 5,
+    "top_k_before_rerank": 10,
+    "top_k_after_rerank": 5,
+    "reranker_model": "BAAI/bge-reranker-v2-m3",
+    "reranker_device": "cpu",
+    "embedding_provider": "huggingface",
+    "llm_provider": "deepseek",
+    "llm_model": "deepseek-v4-flash",
+    "skip_llm": false
+  },
+  "summary": {
+    "no_rerank": {
+      "total_questions": 50,
+      "total_vector_retrieval_time": 0.6468,
+      "total_rerank_time": 0.0,
+      "total_generation_time": 95.0081,
+      "total_time": 95.6553,
+      "avg_time_per_question": 1.9131,
+      "total_tokens": 41756,
+      "avg_tokens_per_question": 835.1
+    },
+    "with_rerank": {
+      "total_questions": 50,
+      "total_vector_retrieval_time": 0.5515,
+      "total_rerank_time": 252.72,
+      "total_generation_time": 105.0188,
+      "total_time": 358.2909,
+      "avg_time_per_question": 7.1658,
+      "total_tokens": 43660,
+      "avg_tokens_per_question": 873.2
+    },
+    "comparison": {
+      "total_time": {
+        "value": 262.6356,
+        "pct": 274.6
+      },
+      "total_tokens": {
+        "value": 1904,
+        "pct": 4.6
+      },
+      "total_generation_time": {
+        "value": 10.0107,
+        "pct": 10.5
+      },
+      "note": "正数表示 Rerank 模式相比无 Rerank 模式增加的值/百分比。"
+    },
+    "overall_elapsed_seconds": 453.98
+  },
+  "type_analysis": {
+    "direct": {
+      "count": 30,
+      "no_rerank": {
+        "avg_total_time": 1.5331,
+        "total_tokens": 24664
+      },
+      "with_rerank": {
+        "avg_total_time": 6.5053,
+        "total_tokens": 24594,
+        "avg_rerank_time": 4.9717
+      }
+    },
+    "partial": {
+      "count": 10,
+      "no_rerank": {
+        "avg_total_time": 3.4861,
+        "total_tokens": 10186
+      },
+      "with_rerank": {
+        "avg_total_time": 10.8211,
+        "total_tokens": 11723,
+        "avg_rerank_time": 6.7091
+      }
+    },
+    "unrelated": {
+      "count": 10,
+      "no_rerank": {
+        "avg_total_time": 1.4803,
+        "total_tokens": 6906
+      },
+      "with_rerank": {
+        "avg_total_time": 5.4921,
+        "total_tokens": 7343,
+        "avg_rerank_time": 3.6477
+      }
+    }
+  },
+  "per_question_comparison": [
+    {
+      "id": 1,
+      "question": "GDDR6X显存单根数据线的速率范围是多少？",
+      "type": "direct",
+      "no_rerank": {
+        "vector_retrieval_time": 0.0315,
+        "rerank_time": 0.0,
+        "generation_time": 1.3147,
+        "total_time": 1.3462,
+        "retrieved_count": 5,
+        "total_tokens": 884,
+        "answer_preview": "根据提供的上下文信息，GDDR6X显存单根数据线的速率范围为 **19-21 Gbps**。"
+      },
+      "with_rerank": {
+        "vector_retrieval_time": 0.0116,
+        "rerank_time": 5.2454,
+        "generation_time": 1.0915,
+        "total_time": 6.3485,
+        "retrieved_before_rerank": 10,
+        "retrieved_count": 5,
+        "rerank_scores": [
+          0.9916,
+          0.9916,
+          0.9916,
+          0.9916,
+          0.9916
+        ],
+        "total_tokens": 882,
+        "answer_preview": "根据上下文信息，GDDR6X显存单根数据线的速率范围为19-21Gbps。"
+      }
+    },
+    {
+      "id": 2,
+      "question": "显存颗粒布局的核心原则是什么？",
+      "type": "direct",
+      "no_rerank": {
+        "vector_retrieval_time": 0.0114,
+        "rerank_time": 0.0,
+        "generation_time": 1.2231,
+        "total_time": 1.2345,
+        "retrieved_count": 5,
+        "total_tokens": 861,
+        "answer_preview": "根据提供的知识库信息，显存颗粒布局的核心原则是：**显存颗粒必须以最短的物理距离环绕GPU**。"
+      },
+      "with_rerank": {
+        "vector_retrieval_time": 0.0104,
+        "rerank_time": 5.217,
+        "generation_time": 1.3437,
+        "total_time": 6.5712,
+        "retrieved_before_rerank": 10,
+        "retrieved_count": 5,
+        "rerank_scores": [
+          0.9948,
+          0.9948,
+          0.9948,
+          0.9948,
+          0.9948
+        ],
+        "total_tokens": 863,
+        "answer_preview": "根据提供的知识库信息，显存颗粒布局的核心原则是：显存颗粒必须以最短的物理距离环绕GPU。"
+      }
+    },
+    {
+      "id": 3,
+      "question": "高速信号走线若偏差1厘米，会导致什么问题？",
+      "type": "direct",
+      "no_rerank": {
+        "vector_retrieval_time": 0.0156,
+        "rerank_time": 0.0,
+        "generation_time": 1.6399,
+        "total_time": 1.6555,
+        "retrieved_count": 5,
+        "total_tokens": 598,
+        "answer_preview": "根据提供的知识库信息，我无法回答这个问题。"
+      },
+      "with_rerank": {
+        "vector_retrieval_time": 0.0096,
+        "rerank_time": 2.8911,
+        "generation_time": 1.3353,
+        "total_time": 4.236,
+        "retrieved_before_rerank": 10,
+        "retrieved_count": 5,
+        "rerank_scores": [
+          0.9846,
+          0.9846,
+          0.9846,
+          0.9846,
+          0.0223
+        ],
+        "total_tokens": 827,
+        "answer_preview": "根据提供的知识库信息，高速信号走线若偏差1厘米，会导致信号到达时间有明显偏差，进而造成数据眼图闭合，系统崩溃。"
+      }
+    },
+    {
+      "id": 4,
+      "question": "工程师采用什么技术来保证显存数据线的信号时序对齐？",
+      "type": "direct",
+      "no_rerank": {
+        "vector_retrieval_time": 0.0124,
+        "rerank_time": 0.0,
+        "generation_time": 1.2769,
+        "total_time": 1.2893,
+        "retrieved_count": 5,
+        "total_tokens": 899,
+        "answer_preview": "工程师采用“等长绕线”技术，将每组显存数据线的走线长度误差控制在几个密耳（千分之几英寸），以保证信号时序对齐。"
+      },
+      "with_rerank": {
+        "vector_retrieval_time": 0.0122,
+        "rerank_time": 2.9633,
+        "generation_time": 1.3368,
+        "total_time": 4.3124,
+        "retrieved_before_rerank": 10,
+        "retrieved_count": 5,
+        "rerank_scores": [
+          0.7328,
+          0.7328,
+          0.7328,
+          0.7328,
+          0.7328
+        ],
+        "total_tokens": 890,
+        "answer_preview": "根据上下文信息，工程师采用 **“等长绕线”** 技术来保证显存数据线的信号时序对齐，将误差控制在几个密耳（千分之几英寸）范围内。"
+      }
+    },
+    {
+      "id": 5,
+      "question": "供电网络的输出目标阻抗通常需要小于多少？",
+      "type": "direct",
+      "no_rerank": {
+        "vector_retrieval_time": 0.0106,
+        "rerank_time": 0.0,
+        "generation_time": 1.3444,
+        "total_time": 1.3549,
+        "retrieved_count": 5,
+        "total_tokens": 911,
+        "answer_preview": "根据提供的上下文信息，供电网络的输出目标阻抗通常需要小于1毫欧。"
+      },
+      "with_rerank": {
+        "vector_retrieval_time": 0.0108,
+        "rerank_time": 3.3277,
+        "generation_time": 1.4161,
+        "total_time": 4.7546,
+        "retrieved_before_rerank": 10,
+        "retrieved_count": 5,
+        "rerank_scores": [
+          0.9865,
+          0.9865,
+          0.9865,
+          0.9865,
+          0.9865
+        ],
+        "total_tokens": 911,
+        "answer_preview": "根据提供的知识库信息，供电网络的输出目标阻抗通常需要小于1毫欧。"
+      }
+    },
+    {
+      "id": 6,
+      "question": "PWM控制器在VRM中的主要作用是什么？",
+      "type": "direct",
+      "no_rerank": {
+        "vector_retrieval_time": 0.0118,
+        "rerank_time": 0.0,
+        "generation_time": 1.3353,
+        "total_time": 1.3471,
+        "retrieved_count": 5,
+        "total_tokens": 1124,
+        "answer_preview": "根据提供的知识库信息，PWM控制器在VRM中的主要作用是不断调整开关管的占空比来稳住电压（即稳定输出电压）。"
+      },
+      "with_rerank": {
+        "vector_retrieval_time": 0.0103,
+        "rerank_time": 5.4493,
+        "generation_time": 1.8331,
+        "total_time": 7.2927,
+        "retrieved_before_rerank": 10,
+        "retrieved_count": 5,
+        "rerank_scores": [
+          0.6107,
+          0.6107,
+          0.5231,
+          0.5231,
+          0.5231
+        ],
+        "total_tokens": 1127,
+        "answer_preview": "根据提供的上下文信息，PWM控制器在VRM中的主要作用是：**不断调整开关管的占空比来稳住电压**，确保闭环控制系统的稳定。"
+      }
+    },
+    {
+      "id": 7,
+      "question": "环路补偿设计不当可能导致什么严重后果？",
+      "type": "direct",
+      "no_rerank": {
+        "vector_retrieval_time": 0.0116,
+        "rerank_time": 0.0,
+        "generation_time": 1.6383,
+        "total_time": 1.6499,
+        "retrieved_count": 5,
+        "total_tokens": 930,
+        "answer_preview": "根据提供的知识库信息，环路补偿设计不当可能导致环路震荡，从而造成电压失控。"
+      },
+      "with_rerank": {
+        "vector_retrieval_time": 0.0117,
+        "rerank_time": 3.4224,
+        "generation_time": 1.2359,
+        "total_time": 4.6699,
+        "retrieved_before_rerank": 10,
+        "retrieved_count": 5,
+        "rerank_scores": [
+          0.0143,
+          0.0143,
+          0.0143,
+          0.0143,
+          0.0143
+        ],
+        "total_tokens": 930,
+        "answer_preview": "根据提供的知识库信息，环路补偿设计不当可能导致环路震荡，造成电压失控。"
+      }
+    },
+    {
+      "id": 8,
+      "question": "多相交错并联如何改善纹波？",
+      "type": "direct",
+      "no_rerank": {
+        "vector_retrieval_time": 0.0115,
+        "rerank_time": 0.0,
+        "generation_time": 1.9303,
+        "total_time": 1.9418,
+        "retrieved_count": 5,
+        "total_tokens": 712,
+        "answer_preview": "多相交错并联通过让每一相电流纹波相互抵消，从而在滤波电容上得到更平滑的直流电。例如，12相供电相比6相供电，对单个电容的纹波电流应力能降低一半以上，这直接关系到电容的寿命。"
+      },
+      "with_rerank": {
+        "vector_retrieval_time": 0.0102,
+        "rerank_time": 3.3369,
+        "generation_time": 1.7129,
+        "total_time": 5.06,
+        "retrieved_before_rerank": 10,
+        "retrieved_count": 5,
+        "rerank_scores": [
+          0.9505,
+          0.9505,
+          0.9505,
+          0.9505,
+          0.9505
+        ],
+        "total_tokens": 683,
+        "answer_preview": "多相交错并联通过让每一相电流纹波相互抵消，使得滤波电容上最终得到平滑的直流电，从而改善纹波。例如，12相供电比6相供电对单个电容的纹波电流应力能降低一半以上。"
+      }
+    },
+    {
+      "id": 9,
+      "question": "12相供电相比6相供电，对单个电容的纹波电流应力能降低多少？",
+      "type": "direct",
+      "no_rerank": {
+        "vector_retrieval_time": 0.0109,
+        "rerank_time": 0.0,
+        "generation_time": 1.4194,
+        "total_time": 1.4303,
+        "retrieved_count": 5,
+        "total_tokens": 634,
+        "answer_preview": "根据提供的上下文信息，12相供电相比6相供电，对单个电容的纹波电流应力能降低一半以上。"
+      },
+      "with_rerank": {
+        "vector_retrieval_time": 0.0111,
+        "rerank_time": 3.6579,
+        "generation_time": 1.1855,
+        "total_time": 4.8545,
+        "retrieved_before_rerank": 10,
+        "retrieved_count": 5,
+        "rerank_scores": [
+          0.999,
+          0.999,
+          0.999,
+          0.999,
+          0.999
+        ],
+        "total_tokens": 634,
+        "answer_preview": "根据提供的上下文信息，12相供电比6相供电，对单个电容的纹波电流应力能降低一半以上。"
+      }
+    },
+    {
+      "id": 10,
+      "question": "信号完整性分析中通常使用什么工具提取PCB走线的模型？",
+      "type": "direct",
+      "no_rerank": {
+        "vector_retrieval_time": 0.0123,
+        "rerank_time": 0.0,
+        "generation_time": 1.3658,
+        "total_time": 1.3781,
+        "retrieved_count": 5,
+        "total_tokens": 572,
+        "answer_preview": "在信号完整性分析中，通常使用**三维电磁场仿真软件**来提取PCB走线的S参数模型。"
+      },
+      "with_rerank": {
+        "vector_retrieval_time": 0.0112,
+        "rerank_time": 5.5212,
+        "generation_time": 1.5435,
+        "total_time": 7.076,
+        "retrieved_before_rerank": 10,
+        "retrieved_count": 5,
+        "rerank_scores": [
+          0.9971,
+          0.9971,
+          0.9971,
+          0.9971,
+          0.9971
+        ],
+        "total_tokens": 586,
+        "answer_preview": "根据提供的知识库信息，信号完整性分析中通常使用**三维电磁场仿真软件**来提取PCB走线的S参数模型。"
+      }
+    },
+    {
+      "id": 11,
+      "question": "信号完整性仿真中，GPU和显存需要加载什么模型？",
+      "type": "direct",
+      "no_rerank": {
+        "vector_retrieval_time": 0.0115,
+        "rerank_time": 0.0,
+        "generation_time": 1.5208,
+        "total_time": 1.5323,
+        "retrieved_count": 5,
+        "total_tokens": 578,
+        "answer_preview": "根据提供的知识库信息，信号完整性仿真中，GPU和显存需要加载**IBIS模型（输入输出缓冲信息规范模型）**。"
+      },
+      "with_rerank": {
+        "vector_retrieval_time": 0.0099,
+        "rerank_time": 2.9273,
+        "generation_time": 1.3672,
+        "total_time": 4.3045,
+        "retrieved_before_rerank": 10,
+        "retrieved_count": 5,
+        "rerank_scores": [
+          0.9975,
+          0.9975,
+          0.9975,
+          0.9975,
+          0.9975
+        ],
+        "total_tokens": 569,
+        "answer_preview": "根据上下文信息，信号完整性仿真中，GPU和显存需要加载IBIS模型（输入输出缓冲信息规范模型）。"
+      }
+    },
+    {
+      "id": 12,
+      "question": "工程师可以通过调整哪些参数来优化阻抗连续性？",
+      "type": "direct",
+      "no_rerank": {
+        "vector_retrieval_time": 0.0116,
+        "rerank_time": 0.0,
+        "generation_time": 1.4919,
+        "total_time": 1.5035,
+        "retrieved_count": 5,
+        "total_tokens": 577,
+        "answer_preview": "根据提供的知识库信息，工程师可以通过调整以下参数来优化阻抗连续性：走线宽度、介质厚度、过孔反焊盘大小。"
+      },
+      "with_rerank": {
+        "vector_retrieval_time": 0.0094,
+        "rerank_time": 3.5985,
+        "generation_time": 1.241,
+        "total_time": 4.8489,
+        "retrieved_before_rerank": 10,
+        "retrieved_count": 5,
+        "rerank_scores": [
+          0.9725,
+          0.9725,
+          0.9725,
+          0.9725,
+          0.9725
+        ],
+        "total_tokens": 579,
+        "answer_preview": "根据提供的知识库信息，工程师可以通过调整以下参数来优化阻抗连续性：**走线宽度、介质厚度、过孔反焊盘大小**。"
+      }
+    },
+    {
+      "id": 13,
+      "question": "电源完整性分析的主要目的是什么？",
+      "type": "direct",
+      "no_rerank": {
+        "vector_retrieval_time": 0.0112,
+        "rerank_time": 0.0,
+        "generation_time": 3.3574,
+        "total_time": 3.3686,
+        "retrieved_count": 5,
+        "total_tokens": 1104,
+        "answer_preview": "根据提供的上下文信息，电源完整性分析的主要目的是通过以下三方面确保供电网络性能：  \n1. **目标阻抗控制**：根据GPU最大电流和允许电压波动，将供电网络输出阻抗降至极低（通常小于1毫欧），以减小电压波动。  \n2. **环路补偿**：确保PWM控制器的闭环控制系统稳定，通过精确匹配电阻、电容值..."
+      },
+      "with_rerank": {
+        "vector_retrieval_time": 0.01,
+        "rerank_time": 3.3682,
+        "generation_time": 1.4704,
+        "total_time": 4.8487,
+        "retrieved_before_rerank": 10,
+        "retrieved_count": 5,
+        "rerank_scores": [
+          0.8997,
+          0.8997,
+          0.8997,
+          0.8997,
+          0.2511
+        ],
+        "total_tokens": 734,
+        "answer_preview": "根据提供的知识库信息，电源完整性分析的主要目的是：模拟整个PCB电源分配网络的阻抗频谱，找出谐振峰，并规划去耦电容，通过“目标阻抗法”在PCB上不同位置组合不同容值、封装的电容，构造出一条平坦的低阻抗曲线，覆盖GPU工作频率的整个范围。"
+      }
+    },
+    {
+      "id": 14,
+      "question": "在去耦电容规划中，10μF电容主要负责哪个频段？",
+      "type": "direct",
+      "no_rerank": {
+        "vector_retrieval_time": 0.0119,
+        "rerank_time": 0.0,
+        "generation_time": 1.5183,
+        "total_time": 1.5302,
+        "retrieved_count": 5,
+        "total_tokens": 642,
+        "answer_preview": "在去耦电容规划中，10μF电容主要负责低频段。"
+      },
+      "with_rerank": {
+        "vector_retrieval_time": 0.0109,
+        "rerank_time": 2.3426,
+        "generation_time": 1.2463,
+        "total_time": 3.5997,
+        "retrieved_before_rerank": 10,
+        "retrieved_count": 5,
+        "rerank_scores": [
+          0.9649,
+          0.9649,
+          0.9649,
+          0.9649,
+          0.9649
+        ],
+        "total_tokens": 639,
+        "answer_preview": "根据提供的知识库信息，10μF电容主要负责低频段。"
+      }
+    },
+    {
+      "id": 15,
+      "question": "在去耦电容规划中，100nF电容主要负责哪个频段？",
+      "type": "direct",
+      "no_rerank": {
+        "vector_retrieval_time": 0.0113,
+        "rerank_time": 0.0,
+        "generation_time": 1.0904,
+        "total_time": 1.1017,
+        "retrieved_count": 5,
+        "total_tokens": 624,
+        "answer_preview": "根据提供的上下文信息，100nF电容主要负责高频段。"
+      },
+      "with_rerank": {
+        "vector_retrieval_time": 0.0098,
+        "rerank_time": 5.569,
+        "generation_time": 1.3396,
+        "total_time": 6.9184,
+        "retrieved_before_rerank": 10,
+        "retrieved_count": 5,
+        "rerank_scores": [
+          0.9938,
+          0.9938,
+          0.9938,
+          0.9938,
+          0.9938
+        ],
+        "total_tokens": 634,
+        "answer_preview": "100nF电容主要负责高频段。"
+      }
+    },
+    {
+      "id": 16,
+      "question": "构造平坦低阻抗曲线采用的经典方法是什么？",
+      "type": "direct",
+      "no_rerank": {
+        "vector_retrieval_time": 0.0134,
+        "rerank_time": 0.0,
+        "generation_time": 1.6828,
+        "total_time": 1.6963,
+        "retrieved_count": 5,
+        "total_tokens": 693,
+        "answer_preview": "根据提供的知识库信息，构造平坦低阻抗曲线采用的经典方法是“目标阻抗法”。该方法通过在PCB上不同位置组合不同容值、封装的电容，以覆盖GPU工作频率的整个范围，从而得到平坦的低阻抗曲线。"
+      },
+      "with_rerank": {
+        "vector_retrieval_time": 0.0097,
+        "rerank_time": 5.8155,
+        "generation_time": 1.4954,
+        "total_time": 7.3207,
+        "retrieved_before_rerank": 10,
+        "retrieved_count": 5,
+        "rerank_scores": [
+          0.9146,
+          0.9146,
+          0.9146,
+          0.9146,
+          0.9146
+        ],
+        "total_tokens": 665,
+        "answer_preview": "根据提供的知识库信息，构造平坦低阻抗曲线采用的经典方法是**目标阻抗法**。该方法通过在PCB上不同位置组合不同容值、封装的电容，从而覆盖GPU工作频率的整个范围。"
+      }
+    },
+    {
+      "id": 17,
+      "question": "高端显卡PCB通常采用几层板设计？",
+      "type": "direct",
+      "no_rerank": {
+        "vector_retrieval_time": 0.0115,
+        "rerank_time": 0.0,
+        "generation_time": 1.5207,
+        "total_time": 1.5323,
+        "retrieved_count": 5,
+        "total_tokens": 883,
+        "answer_preview": "根据提供的知识库信息，高端显卡PCB通常采用12层板设计。文档中明确指出：“12层板的结构可能是：顶层-地-信号-电源-地-信号-信号-地-电源-信号-地-底层。”"
+      },
+      "with_rerank": {
+        "vector_retrieval_time": 0.0114,
+        "rerank_time": 5.6221,
+        "generation_time": 1.3961,
+        "total_time": 7.0296,
+        "retrieved_before_rerank": 10,
+        "retrieved_count": 5,
+        "rerank_scores": [
+          0.892,
+          0.892,
+          0.8802,
+          0.8802,
+          0.8802
+        ],
+        "total_tokens": 884,
+        "answer_preview": "根据提供的知识库信息，高端显卡PCB通常采用12层板设计。文档中明确提到：“12层板的结构可能是：顶层-地-信号-电源-地-信号-信号-地-电源-信号-地-底层”。"
+      }
+    },
+    {
+      "id": 18,
+      "question": "PCB制造中背钻工艺的目的是什么？",
+      "type": "direct",
+      "no_rerank": {
+        "vector_retrieval_time": 0.0121,
+        "rerank_time": 0.0,
+        "generation_time": 2.0652,
+        "total_time": 2.0773,
+        "retrieved_count": 5,
+        "total_tokens": 878,
+        "answer_preview": "根据上下文信息，背钻工艺的目的是消除高速信号层通孔上无用孔壁铜形成的“残桩”天线效应，避免信号反射。"
+      },
+      "with_rerank": {
+        "vector_retrieval_time": 0.0103,
+        "rerank_time": 4.1842,
+        "generation_time": 1.8844,
+        "total_time": 6.0789,
+        "retrieved_before_rerank": 10,
+        "retrieved_count": 5,
+        "rerank_scores": [
+          0.843,
+          0.843,
+          0.5988,
+          0.5988,
+          0.0337
+        ],
+        "total_tokens": 954,
+        "answer_preview": "根据提供的知识库信息，PCB制造中背钻工艺的目的是：在高速信号层的通孔上，从背面将没用的孔壁铜钻掉，消除其形成的“残桩”天线效应，避免信号反射。"
+      }
+    },
+    {
+      "id": 19,
+      "question": "PCB电镀工序中，孔壁铜层需要加厚到大约多少微米？",
+      "type": "direct",
+      "no_rerank": {
+        "vector_retrieval_time": 0.0097,
+        "rerank_time": 0.0,
+        "generation_time": 1.2812,
+        "total_time": 1.2909,
+        "retrieved_count": 5,
+        "total_tokens": 840,
+        "answer_preview": "根据上下文信息，PCB电镀工序中，孔壁铜层需要加厚到大约25微米。"
+      },
+      "with_rerank": {
+        "vector_retrieval_time": 0.0102,
+        "rerank_time": 7.2884,
+        "generation_time": 1.1746,
+        "total_time": 8.4732,
+        "retrieved_before_rerank": 10,
+        "retrieved_count": 5,
+        "rerank_scores": [
+          0.9572,
+          0.9572,
+          0.9572,
+          0.9572,
+          0.9572
+        ],
+        "total_tokens": 830,
+        "answer_preview": "根据提供的知识库信息，PCB电镀工序中，孔壁铜层需要加厚到大约25微米。"
+      }
+    },
+    {
+      "id": 20,
+      "question": "GPU回流焊的峰值温度范围是多少？",
+      "type": "direct",
+      "no_rerank": {
+        "vector_retrieval_time": 0.0115,
+        "rerank_time": 0.0,
+        "generation_time": 0.948,
+        "total_time": 0.9595,
+        "retrieved_count": 5,
+        "total_tokens": 914,
+        "answer_preview": "根据上下文信息，GPU回流焊的峰值温度范围约为235-245度。"
+      },
+      "with_rerank": {
+        "vector_retrieval_time": 0.0091,
+        "rerank_time": 6.9737,
+        "generation_time": 1.6498,
+        "total_time": 8.6326,
+        "retrieved_before_rerank": 10,
+        "retrieved_count": 5,
+        "rerank_scores": [
+          0.9948,
+          0.9948,
+          0.9948,
+          0.9948,
+          0.9948
+        ],
+        "total_tokens": 925,
+        "answer_preview": "根据提供的上下文信息，GPU回流焊的峰值温度范围约为 **235-245度**。"
+      }
+    },
+    {
+      "id": 21,
+      "question": "回流焊中所有锡球处于液相线以上的时间（TAL）应控制在多少？",
+      "type": "direct",
+      "no_rerank": {
+        "vector_retrieval_time": 0.0151,
+        "rerank_time": 0.0,
+        "generation_time": 1.4491,
+        "total_time": 1.4642,
+        "retrieved_count": 5,
+        "total_tokens": 953,
+        "answer_preview": "回流焊中所有锡球处于液相线以上的时间（TAL）应控制在 **60-90秒** 之间。"
+      },
+      "with_rerank": {
+        "vector_retrieval_time": 0.0102,
+        "rerank_time": 7.5768,
+        "generation_time": 1.5216,
+        "total_time": 9.1087,
+        "retrieved_before_rerank": 10,
+        "retrieved_count": 5,
+        "rerank_scores": [
+          0.9932,
+          0.9932,
+          0.9932,
+          0.9932,
+          0.9932
+        ],
+        "total_tokens": 956,
+        "answer_preview": "根据提供的上下文信息，回流焊中所有锡球处于液相线以上的时间（TAL）应控制在 **60-90秒** 之间。"
+      }
+    },
+    {
+      "id": 22,
+      "question": "回流焊过程中PCB表面的温差不得超过多少度？",
+      "type": "direct",
+      "no_rerank": {
+        "vector_retrieval_time": 0.0094,
+        "rerank_time": 0.0,
+        "generation_time": 1.0037,
+        "total_time": 1.0131,
+        "retrieved_count": 5,
+        "total_tokens": 913,
+        "answer_preview": "根据提供的知识库信息，回流焊过程中PCB表面温差不得超过5度。"
+      },
+      "with_rerank": {
+        "vector_retrieval_time": 0.0118,
+        "rerank_time": 7.0959,
+        "generation_time": 1.4103,
+        "total_time": 8.5181,
+        "retrieved_before_rerank": 10,
+        "retrieved_count": 5,
+        "rerank_scores": [
+          0.9814,
+          0.9814,
+          0.9814,
+          0.9814,
+          0.9814
+        ],
+        "total_tokens": 915,
+        "answer_preview": "根据提供的知识库信息，回流焊过程中PCB表面的温差不得超过5度。"
+      }
+    },
+    {
+      "id": 23,
+      "question": "回流焊冷却斜率太快会导致什么缺陷？",
+      "type": "direct",
+      "no_rerank": {
+        "vector_retrieval_time": 0.0117,
+        "rerank_time": 0.0,
+        "generation_time": 1.3507,
+        "total_time": 1.3624,
+        "retrieved_count": 5,
+        "total_tokens": 922,
+        "answer_preview": "根据提供的知识库信息，回流焊冷却斜率太快会导致焊点变脆。"
+      },
+      "with_rerank": {
+        "vector_retrieval_time": 0.0107,
+        "rerank_time": 7.0631,
+        "generation_time": 1.673,
+        "total_time": 8.7468,
+        "retrieved_before_rerank": 10,
+        "retrieved_count": 5,
+        "rerank_scores": [
+          0.8686,
+          0.8686,
+          0.8686,
+          0.8686,
+          0.8686
+        ],
+        "total_tokens": 938,
+        "answer_preview": "根据提供的知识库信息，回流焊冷却斜率太快会导致焊点变脆。"
+      }
+    },
+    {
+      "id": 24,
+      "question": "回流焊冷却斜率太慢会导致什么缺陷？",
+      "type": "direct",
+      "no_rerank": {
+        "vector_retrieval_time": 0.0108,
+        "rerank_time": 0.0,
+        "generation_time": 1.433,
+        "total_time": 1.4437,
+        "retrieved_count": 5,
+        "total_tokens": 945,
+        "answer_preview": "根据提供的知识库信息，回流焊冷却斜率太慢会导致金属间化合物层过厚。"
+      },
+      "with_rerank": {
+        "vector_retrieval_time": 0.011,
+        "rerank_time": 7.2698,
+        "generation_time": 1.6697,
+        "total_time": 8.9505,
+        "retrieved_before_rerank": 10,
+        "retrieved_count": 5,
+        "rerank_scores": [
+          0.812,
+          0.812,
+          0.812,
+          0.812,
+          0.812
+        ],
+        "total_tokens": 944,
+        "answer_preview": "根据提供的知识库信息，回流焊冷却斜率太慢会导致金属间化合物层过厚。"
+      }
+    },
+    {
+      "id": 25,
+      "question": "GPU底部填充环氧树脂胶的主要作用是什么？",
+      "type": "direct",
+      "no_rerank": {
+        "vector_retrieval_time": 0.0127,
+        "rerank_time": 0.0,
+        "generation_time": 1.693,
+        "total_time": 1.7057,
+        "retrieved_count": 5,
+        "total_tokens": 429,
+        "answer_preview": "GPU底部填充环氧树脂胶的主要作用是缓冲应力，在热循环中将应力均匀分散到整个芯片底面，从而极大提升可靠性。"
+      },
+      "with_rerank": {
+        "vector_retrieval_time": 0.0116,
+        "rerank_time": 2.225,
+        "generation_time": 1.7496,
+        "total_time": 3.9862,
+        "retrieved_before_rerank": 10,
+        "retrieved_count": 5,
+        "rerank_scores": [
+          0.9953,
+          0.9953,
+          0.9953,
+          0.9953,
+          0.9953
+        ],
+        "total_tokens": 419,
+        "answer_preview": "根据提供的知识库信息，GPU底部填充环氧树脂胶的主要作用是缓冲应力，在热循环中将应力均匀分散到整个芯片底面，从而极大提升可靠性。"
+      }
+    },
+    {
+      "id": 26,
+      "question": "真空腔均热板（VC）内部利用什么原理传递热量？",
+      "type": "direct",
+      "no_rerank": {
+        "vector_retrieval_time": 0.0135,
+        "rerank_time": 0.0,
+        "generation_time": 2.0987,
+        "total_time": 2.1122,
+        "retrieved_count": 5,
+        "total_tokens": 1054,
+        "answer_preview": "根据提供的知识库信息，真空腔均热板（VC）内部利用**相变潜热**原理传递热量。具体来说，工质水在热源处吸热蒸发（从液态变为气态，吸收约2200J/g热量），扩散到冷端凝结，液体再通过毛细力回流，实现高效传热。"
+      },
+      "with_rerank": {
+        "vector_retrieval_time": 0.011,
+        "rerank_time": 7.4265,
+        "generation_time": 2.4331,
+        "total_time": 9.8706,
+        "retrieved_before_rerank": 10,
+        "retrieved_count": 5,
+        "rerank_scores": [
+          0.9912,
+          0.9912,
+          0.9912,
+          0.9912,
+          0.9912
+        ],
+        "total_tokens": 1036,
+        "answer_preview": "真空腔均热板（VC）内部利用工质水的相变潜热原理传递热量：工质水在热源处吸热蒸发（吸收约2200J/g热量），蒸汽扩散到冷端凝结放热，液态水再通过铜粉烧结的毛细结构回流至热源，形成循环。这种相变传热能力是纯铜的几十倍。"
+      }
+    },
+    {
+      "id": 27,
+      "question": "水从液态变为气态时，每克吸收多少相变潜热？",
+      "type": "direct",
+      "no_rerank": {
+        "vector_retrieval_time": 0.0098,
+        "rerank_time": 0.0,
+        "generation_time": 1.5169,
+        "total_time": 1.5267,
+        "retrieved_count": 5,
+        "total_tokens": 960,
+        "answer_preview": "根据上下文信息，水从液态变为气态时，每克吸收约2200J的相变潜热。"
+      },
+      "with_rerank": {
+        "vector_retrieval_time": 0.0127,
+        "rerank_time": 3.4248,
+        "generation_time": 1.4022,
+        "total_time": 4.8397,
+        "retrieved_before_rerank": 10,
+        "retrieved_count": 5,
+        "rerank_scores": [
+          0.8761,
+          0.8761,
+          0.8761,
+          0.8761,
+          0.8761
+        ],
+        "total_tokens": 971,
+        "answer_preview": "根据提供的知识库信息，水从液态变为气态时，每克吸收的相变潜热约为 **2200J/g**。"
+      }
+    },
+    {
+      "id": 28,
+      "question": "VC均热板的传热能力大约是纯铜的多少倍？",
+      "type": "direct",
+      "no_rerank": {
+        "vector_retrieval_time": 0.0133,
+        "rerank_time": 0.0,
+        "generation_time": 1.3957,
+        "total_time": 1.409,
+        "retrieved_count": 5,
+        "total_tokens": 943,
+        "answer_preview": "根据上下文信息，VC均热板的传热能力是纯铜的几十倍。"
+      },
+      "with_rerank": {
+        "vector_retrieval_time": 0.0115,
+        "rerank_time": 7.6033,
+        "generation_time": 1.5036,
+        "total_time": 9.1185,
+        "retrieved_before_rerank": 10,
+        "retrieved_count": 5,
+        "rerank_scores": [
+          0.9841,
+          0.9841,
+          0.9841,
+          0.9841,
+          0.9841
+        ],
+        "total_tokens": 944,
+        "answer_preview": "根据上下文信息，VC均热板的传热能力大约是纯铜的几十倍。"
+      }
+    },
+    {
+      "id": 29,
+      "question": "当热流密度超过VC的临界值时会发生什么现象？",
+      "type": "direct",
+      "no_rerank": {
+        "vector_retrieval_time": 0.0104,
+        "rerank_time": 0.0,
+        "generation_time": 1.0947,
+        "total_time": 1.1051,
+        "retrieved_count": 5,
+        "total_tokens": 969,
+        "answer_preview": "当热流密度超过VC的临界值时，蒸发端的液体无法及时回流，会发生“烧干”，传热能力骤降。"
+      },
+      "with_rerank": {
+        "vector_retrieval_time": 0.0103,
+        "rerank_time": 7.4211,
+        "generation_time": 2.1304,
+        "total_time": 9.5618,
+        "retrieved_before_rerank": 10,
+        "retrieved_count": 5,
+        "rerank_scores": [
+          0.9857,
+          0.9857,
+          0.9857,
+          0.9857,
+          0.9857
+        ],
+        "total_tokens": 990,
+        "answer_preview": "当热流密度超过VC的临界值时，蒸发端的液体无法及时回流，会发生“烧干”，传热能力骤降。"
+      }
+    },
+    {
+      "id": 30,
+      "question": "散热鳍片是否越密越好？为什么？",
+      "type": "direct",
+      "no_rerank": {
+        "vector_retrieval_time": 0.0095,
+        "rerank_time": 0.0,
+        "generation_time": 1.6199,
+        "total_time": 1.6295,
+        "retrieved_count": 5,
+        "total_tokens": 718,
+        "answer_preview": "散热鳍片并非越密越好。原因是：过密的鳍片会让气流阻力过大，需要风扇在更高转速才能吹透，容易形成紊流和噪音，影响散热与静音之间的平衡。"
+      },
+      "with_rerank": {
+        "vector_retrieval_time": 0.0114,
+        "rerank_time": 3.3238,
+        "generation_time": 1.8916,
+        "total_time": 5.2268,
+        "retrieved_before_rerank": 10,
+        "retrieved_count": 5,
+        "rerank_scores": [
+          0.999,
+          0.999,
+          0.999,
+          0.999,
+          0.999
+        ],
+        "total_tokens": 735,
+        "answer_preview": "不是。根据上下文信息，散热鳍片并非越密越好，因为过密会让气流阻力过大，需要风扇在更高转速才能吹透，从而形成紊流和噪音。这是一个在散热效果与静音之间的极致平衡。"
+      }
+    },
+    {
+      "id": 31,
+      "question": "在12层板叠层中，为什么信号层通常紧邻地层摆放？如果改为两个信号层相邻，可能引入什么信号完整性问题？",
+      "type": "partial",
+      "no_rerank": {
+        "vector_retrieval_time": 0.0139,
+        "rerank_time": 0.0,
+        "generation_time": 5.2236,
+        "total_time": 5.2374,
+        "retrieved_count": 5,
+        "total_tokens": 1234,
+        "answer_preview": "根据提供的知识库信息，我无法回答这个问题。上下文主要介绍了12层板的一种叠层结构（顶层-地-信号-电源-地-信号-信号-地-电源-信号-地-底层），但并未解释信号层紧邻地层的原因，也未讨论两个信号层相邻可能引入的信号完整性问题。"
+      },
+      "with_rerank": {
+        "vector_retrieval_time": 0.0138,
+        "rerank_time": 6.3258,
+        "generation_time": 4.3854,
+        "total_time": 10.725,
+        "retrieved_before_rerank": 10,
+        "retrieved_count": 5,
+        "rerank_scores": [
+          0.6407,
+          0.6407,
+          0.0832,
+          0.0832,
+          0.0832
+        ],
+        "total_tokens": 1155,
+        "answer_preview": "根据提供的知识库信息，我无法回答这个问题。上下文仅列出了12层板的叠层结构（顶层-地-信号-电源-地-信号-信号-地-电源-信号-地-底层），并未解释信号层紧邻地层摆放的原因，也未讨论两个信号层相邻可能引发的具体信号完整性问题。"
+      }
+    },
+    {
+      "id": 32,
+      "question": "如果PCB制造商将回流焊的峰值温度从推荐值降低10°C，可能会对BGA焊点可靠性产生哪些影响？",
+      "type": "partial",
+      "no_rerank": {
+        "vector_retrieval_time": 0.0143,
+        "rerank_time": 0.0,
+        "generation_time": 5.3158,
+        "total_time": 5.3301,
+        "retrieved_count": 5,
+        "total_tokens": 1270,
+        "answer_preview": "根据提供的知识库信息，回流焊的峰值温度推荐为235-245°C，且要求所有锡球在液相线以上的时间（TAL）为60-90秒。如果将峰值温度降低10°C（至225-235°C），可能导致以下影响：\n\n1. **焊料不完全熔化**：部分锡球可能无法达到液相线温度（通常约217-220°C），导致焊点未充分..."
+      },
+      "with_rerank": {
+        "vector_retrieval_time": 0.012,
+        "rerank_time": 7.8624,
+        "generation_time": 6.9091,
+        "total_time": 14.7835,
+        "retrieved_before_rerank": 10,
+        "retrieved_count": 5,
+        "rerank_scores": [
+          0.6975,
+          0.6975,
+          0.6975,
+          0.6975,
+          0.6975
+        ],
+        "total_tokens": 1410,
+        "answer_preview": "根据提供的上下文信息，回流焊的峰值温度推荐范围为235-245°C，且需保证所有锡球在峰值温度以上（液相线以上）的时间（TAL）在60-90秒之间，同时助焊剂需完全活化。如果峰值温度降低10°C（即降至225-235°C），可能产生以下影响：\n\n1. **锡球熔化不充分**：峰值温度可能低于锡膏液相..."
+      }
+    },
+    {
+      "id": 33,
+      "question": "当显存速率提升到24Gbps以上时，现有的FR-4 PCB材料可能面临什么瓶颈？你会建议改用哪种类型的板材？",
+      "type": "partial",
+      "no_rerank": {
+        "vector_retrieval_time": 0.0142,
+        "rerank_time": 0.0,
+        "generation_time": 1.3411,
+        "total_time": 1.3553,
+        "retrieved_count": 5,
+        "total_tokens": 890,
+        "answer_preview": "根据提供的知识库信息，我无法回答这个问题。"
+      },
+      "with_rerank": {
+        "vector_retrieval_time": 0.0116,
+        "rerank_time": 6.3919,
+        "generation_time": 2.5296,
+        "total_time": 8.9332,
+        "retrieved_before_rerank": 10,
+        "retrieved_count": 5,
+        "rerank_scores": [
+          0.044,
+          0.044,
+          0.0316,
+          0.0316,
+          0.0316
+        ],
+        "total_tokens": 1138,
+        "answer_preview": "根据提供的知识库信息，我无法回答这个问题。"
+      }
+    },
+    {
+      "id": 34,
+      "question": "PCB表面处理工艺（如ENIG vs HASL）对高速信号传输质量有何影响？哪种更适合GDDR6X的应用场景？",
+      "type": "partial",
+      "no_rerank": {
+        "vector_retrieval_time": 0.0172,
+        "rerank_time": 0.0,
+        "generation_time": 2.2139,
+        "total_time": 2.2311,
+        "retrieved_count": 5,
+        "total_tokens": 664,
+        "answer_preview": "根据提供的知识库信息，我无法回答这个问题。上下文内容仅涉及信号完整性分析中通过三维电磁场仿真提取S参数、加载IBIS模型以及调整走线宽度等参数来优化阻抗连续性，未提及任何关于PCB表面处理工艺（如ENIG或HASL）对高速信号传输质量的影响，也未涉及GDDR6X应用场景的具体要求。"
+      },
+      "with_rerank": {
+        "vector_retrieval_time": 0.013,
+        "rerank_time": 6.2638,
+        "generation_time": 2.2577,
+        "total_time": 8.5344,
+        "retrieved_before_rerank": 10,
+        "retrieved_count": 5,
+        "rerank_scores": [
+          0.0383,
+          0.0383,
+          0.0166,
+          0.0166,
+          0.0166
+        ],
+        "total_tokens": 997,
+        "answer_preview": "根据提供的知识库信息，我无法回答这个问题。上下文主要涉及信号完整性分析、电源完整性分析以及PCB制造工艺中的层叠结构，但未提及表面处理工艺（如ENIG vs HASL）对高速信号传输质量的影响或其在GDDR6X应用场景中的适用性。"
+      }
+    },
+    {
+      "id": 35,
+      "question": "如果去耦电容的ESL（等效串联电感）过大，会对PDN的高频去耦效果产生什么影响？设计中应如何从布局上减小ESL？",
+      "type": "partial",
+      "no_rerank": {
+        "vector_retrieval_time": 0.0205,
+        "rerank_time": 0.0,
+        "generation_time": 2.1869,
+        "total_time": 2.2075,
+        "retrieved_count": 5,
+        "total_tokens": 725,
+        "answer_preview": "根据提供的知识库信息，我无法回答这个问题。上下文仅涉及电源完整性分析的基本概念（如电容分工和目标阻抗法），未提及ESL（等效串联电感）过大的影响或布局上减小ESL的具体方法。"
+      },
+      "with_rerank": {
+        "vector_retrieval_time": 0.013,
+        "rerank_time": 3.9367,
+        "generation_time": 2.3328,
+        "total_time": 6.2825,
+        "retrieved_before_rerank": 10,
+        "retrieved_count": 5,
+        "rerank_scores": [
+          0.0961,
+          0.0961,
+          0.0961,
+          0.0961,
+          0.0961
+        ],
+        "total_tokens": 726,
+        "answer_preview": "根据提供的知识库信息，我无法回答这个问题。上下文仅涉及电容容值分工和目标阻抗法，未提及ESL的影响及布局优化方法。"
+      }
+    },
+    {
+      "id": 36,
+      "question": "BGA封装在热循环中焊点断裂的根本原因是什么？除了底部填充胶，还有哪些设计手段可以缓解这一应力问题？",
+      "type": "partial",
+      "no_rerank": {
+        "vector_retrieval_time": 0.0116,
+        "rerank_time": 0.0,
+        "generation_time": 3.1496,
+        "total_time": 3.1613,
+        "retrieved_count": 5,
+        "total_tokens": 1119,
+        "answer_preview": "根据提供的知识库信息，BGA封装在热循环中焊点断裂的根本原因是**BGA封装的热膨胀系数（CTE）与PCB不同，导致热应力使焊点断裂**。\n\n关于“除了底部填充胶，还有哪些设计手段可以缓解这一应力问题”，上下文信息中**未提及**。根据上下文，仅提到了通过严格控制回流焊温度曲线（如峰值温度、TAL时..."
+      },
+      "with_rerank": {
+        "vector_retrieval_time": 0.0135,
+        "rerank_time": 7.8484,
+        "generation_time": 2.7764,
+        "total_time": 10.6382,
+        "retrieved_before_rerank": 10,
+        "retrieved_count": 5,
+        "rerank_scores": [
+          0.9837,
+          0.9837,
+          0.9674,
+          0.9674,
+          0.9674
+        ],
+        "total_tokens": 1460,
+        "answer_preview": "根据提供的上下文信息，BGA封装在热循环中焊点断裂的根本原因是**BGA封装与PCB的热膨胀系数不同，导致热应力使焊点断裂**（文档1、2、3、4、5均提及）。\n\n除了底部填充胶，上下文中未提及任何其他设计手段来缓解这一应力问题。因此，**根据提供的知识库信息，我无法回答这个问题**。"
+      }
+    },
+    {
+      "id": 37,
+      "question": "VC均热板的毛细结构如果设计不当（如毛细孔径过大），对均热板的传热性能和重力方向依赖会产生什么影响？",
+      "type": "partial",
+      "no_rerank": {
+        "vector_retrieval_time": 0.0159,
+        "rerank_time": 0.0,
+        "generation_time": 5.1637,
+        "total_time": 5.1796,
+        "retrieved_count": 5,
+        "total_tokens": 1229,
+        "answer_preview": "根据上下文信息，真空腔均热板（VC）依靠内部铜粉烧结的毛细结构提供的毛细力使工质液体从冷端回流至热源。如果毛细孔径设计过大，会导致毛细力减弱，液体回流能力下降。当热流密度较高时，蒸发端的液体无法及时回流，更容易发生“烧干”现象，从而使传热能力骤降。此外，原本VC对重力方向依赖较小（因毛细力主导），但..."
+      },
+      "with_rerank": {
+        "vector_retrieval_time": 0.0114,
+        "rerank_time": 7.5501,
+        "generation_time": 5.1024,
+        "total_time": 12.6639,
+        "retrieved_before_rerank": 10,
+        "retrieved_count": 5,
+        "rerank_scores": [
+          0.7848,
+          0.7848,
+          0.7848,
+          0.7848,
+          0.7848
+        ],
+        "total_tokens": 1199,
+        "answer_preview": "根据提供的上下文信息，VC均热板的毛细结构（铜粉烧结）负责通过毛细力使液态工质从冷端回流至热源端。如果毛细孔径设计过大，毛细力会减弱，导致液体回流能力下降。当热流密度较高时，蒸发端液体无法及时回流，更容易发生“烧干”现象，使传热能力骤降。此外，孔径过大导致毛细力不足，会使得均热板对重力方向的依赖增加..."
+      }
+    },
+    {
+      "id": 38,
+      "question": "如果PCB叠层中电源层和地层之间的介质厚度增加，对PDN阻抗特性会产生什么影响？这与去耦电容的布局策略应如何配合调整？",
+      "type": "partial",
+      "no_rerank": {
+        "vector_retrieval_time": 0.0166,
+        "rerank_time": 0.0,
+        "generation_time": 2.4195,
+        "total_time": 2.4361,
+        "retrieved_count": 5,
+        "total_tokens": 737,
+        "answer_preview": "根据提供的知识库信息，我无法回答这个问题。上下文主要介绍了电源完整性分析中通过目标阻抗法规划去耦电容的基本原理，但并未涉及电源层与地层间介质厚度变化对PDN阻抗特性的具体影响，也没有提及相应的布局策略调整方法。"
+      },
+      "with_rerank": {
+        "vector_retrieval_time": 0.0118,
+        "rerank_time": 6.009,
+        "generation_time": 4.7476,
+        "total_time": 10.7684,
+        "retrieved_before_rerank": 10,
+        "retrieved_count": 5,
+        "rerank_scores": [
+          0.6237,
+          0.6237,
+          0.3072,
+          0.3072,
+          0.3072
+        ],
+        "total_tokens": 1199,
+        "answer_preview": "根据提供的知识库信息，我无法回答这个问题。上下文主要介绍了信号完整性和电源完整性的分析方法，以及去耦电容的职责分工（10uF负责低频段，100nF负责高频段），但并未提及PCB叠层中电源层与地层之间介质厚度变化对PDN阻抗特性的具体影响，也没有说明该变化应如何配合去耦电容布局策略进行调整。因此无法给..."
+      }
+    },
+    {
+      "id": 39,
+      "question": "在回流焊过程中，若PCB板内存在大面积铜箔区域与BGA区域温差过大，可能导致哪些焊接缺陷？如何在PCB布局阶段预先避免？",
+      "type": "partial",
+      "no_rerank": {
+        "vector_retrieval_time": 0.0147,
+        "rerank_time": 0.0,
+        "generation_time": 3.3231,
+        "total_time": 3.3378,
+        "retrieved_count": 5,
+        "total_tokens": 1104,
+        "answer_preview": "根据提供的知识库信息，回流焊过程中若PCB表面温差超过5度，会引起**虚焊**或**桥连**这两种焊接缺陷。\n\n关于如何在PCB布局阶段预先避免该问题，上下文中没有提供具体的预防措施。因此，根据提供的知识库信息，我无法回答这部分问题。"
+      },
+      "with_rerank": {
+        "vector_retrieval_time": 0.0107,
+        "rerank_time": 7.4333,
+        "generation_time": 4.4798,
+        "total_time": 11.9238,
+        "retrieved_before_rerank": 10,
+        "retrieved_count": 5,
+        "rerank_scores": [
+          0.825,
+          0.825,
+          0.825,
+          0.825,
+          0.825
+        ],
+        "total_tokens": 1170,
+        "answer_preview": "根据提供的知识库信息，若PCB板内存在大面积铜箔区域与BGA区域温差过大，可能导致**虚焊**或**桥连**（因为文档明确指出回流焊时PCB表面温差应不超过5度，否则会引起这两种缺陷）。\n\n关于如何在PCB布局阶段预先避免，**根据提供的知识库信息，我无法回答这个问题**，因为文档中未涉及PCB布局..."
+      }
+    },
+    {
+      "id": 40,
+      "question": "均热板的\"烧干\"现象与哪些设计参数直接相关？在高功耗显卡中，如何通过散热器整体架构设计来推迟或避免烧干的发生？",
+      "type": "partial",
+      "no_rerank": {
+        "vector_retrieval_time": 0.0125,
+        "rerank_time": 0.0,
+        "generation_time": 4.3717,
+        "total_time": 4.3843,
+        "retrieved_count": 5,
+        "total_tokens": 1214,
+        "answer_preview": "根据提供的上下文信息，均热板的“烧干”现象与**热流密度**和**功率极限**直接相关。当热流密度超过临界值时，蒸发端的液体无法及时回流，就会发生“烧干”，导致传热能力骤降。\n\n关于“在高功耗显卡中，如何通过散热器整体架构设计来推迟或避免烧干的发生”，根据提供的知识库信息，我无法回答这个问题。因为上..."
+      },
+      "with_rerank": {
+        "vector_retrieval_time": 0.0143,
+        "rerank_time": 7.4696,
+        "generation_time": 5.4741,
+        "total_time": 12.958,
+        "retrieved_before_rerank": 10,
+        "retrieved_count": 5,
+        "rerank_scores": [
+          0.9303,
+          0.9303,
+          0.9303,
+          0.9303,
+          0.9303
+        ],
+        "total_tokens": 1269,
+        "answer_preview": "根据提供的知识库信息，我无法完整回答这个问题。上下文仅提到真空腔均热板（VC）存在“功率极限”，当热流密度超过临界值时，蒸发端的液体无法及时回流会导致“烧干”现象，但未具体列出与“烧干”直接相关的设计参数（如毛细结构孔径、工质充注量、腔体厚度等），也未说明在高功耗显卡中如何通过散热器整体架构设计（如..."
+      }
+    },
+    {
+      "id": 41,
+      "question": "GPU编程中常用的并行计算编程模型有哪些？",
+      "type": "unrelated",
+      "no_rerank": {
+        "vector_retrieval_time": 0.012,
+        "rerank_time": 0.0,
+        "generation_time": 1.5594,
+        "total_time": 1.5714,
+        "retrieved_count": 5,
+        "total_tokens": 875,
+        "answer_preview": "根据提供的知识库信息，我无法回答这个问题。"
+      },
+      "with_rerank": {
+        "vector_retrieval_time": 0.0105,
+        "rerank_time": 5.0283,
+        "generation_time": 2.1865,
+        "total_time": 7.2253,
+        "retrieved_before_rerank": 10,
+        "retrieved_count": 5,
+        "rerank_scores": [
+          0.1334,
+          0.1334,
+          0.0137,
+          0.0137,
+          0.0137
+        ],
+        "total_tokens": 782,
+        "answer_preview": "根据提供的知识库信息，我无法回答这个问题。上下文内容主要涉及PCB硬件设计中的信号完整性分析和显存布局，未提及GPU编程中的并行计算编程模型。"
+      }
+    },
+    {
+      "id": 42,
+      "question": "TCP/IP协议中，三次握手的具体过程是什么？",
+      "type": "unrelated",
+      "no_rerank": {
+        "vector_retrieval_time": 0.0117,
+        "rerank_time": 0.0,
+        "generation_time": 1.0481,
+        "total_time": 1.0599,
+        "retrieved_count": 5,
+        "total_tokens": 551,
+        "answer_preview": "根据提供的知识库信息，我无法回答这个问题。"
+      },
+      "with_rerank": {
+        "vector_retrieval_time": 0.01,
+        "rerank_time": 5.4423,
+        "generation_time": 1.8526,
+        "total_time": 7.3049,
+        "retrieved_before_rerank": 10,
+        "retrieved_count": 5,
+        "rerank_scores": [
+          0.0001,
+          0.0001,
+          0.0001,
+          0.0001,
+          0.0001
+        ],
+        "total_tokens": 579,
+        "answer_preview": "根据提供的知识库信息，我无法回答这个问题。所有上下文内容均关于PCB信号完整性分析，未涉及TCP/IP协议握手的相关信息。"
+      }
+    },
+    {
+      "id": 43,
+      "question": "区块链的共识机制中，工作量证明（PoW）和权益证明（PoS）的主要区别是什么？",
+      "type": "unrelated",
+      "no_rerank": {
+        "vector_retrieval_time": 0.0135,
+        "rerank_time": 0.0,
+        "generation_time": 1.0885,
+        "total_time": 1.1019,
+        "retrieved_count": 5,
+        "total_tokens": 342,
+        "answer_preview": "根据提供的知识库信息，我无法回答这个问题。"
+      },
+      "with_rerank": {
+        "vector_retrieval_time": 0.01,
+        "rerank_time": 2.1759,
+        "generation_time": 1.9306,
+        "total_time": 4.1165,
+        "retrieved_before_rerank": 10,
+        "retrieved_count": 5,
+        "rerank_scores": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "total_tokens": 556,
+        "answer_preview": "根据提供的知识库信息，我无法回答这个问题。"
+      }
+    },
+    {
+      "id": 44,
+      "question": "在关系型数据库中，ACID四个特性的含义分别是什么？",
+      "type": "unrelated",
+      "no_rerank": {
+        "vector_retrieval_time": 0.0118,
+        "rerank_time": 0.0,
+        "generation_time": 1.4878,
+        "total_time": 1.4997,
+        "retrieved_count": 5,
+        "total_tokens": 564,
+        "answer_preview": "根据提供的知识库信息，我无法回答这个问题。"
+      },
+      "with_rerank": {
+        "vector_retrieval_time": 0.0096,
+        "rerank_time": 2.9573,
+        "generation_time": 1.4806,
+        "total_time": 4.4475,
+        "retrieved_before_rerank": 10,
+        "retrieved_count": 5,
+        "rerank_scores": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "total_tokens": 555,
+        "answer_preview": "根据提供的知识库信息，我无法回答这个问题。"
+      }
+    },
+    {
+      "id": 45,
+      "question": "Linux操作系统中，进程间通信（IPC）的主要方式有哪些？",
+      "type": "unrelated",
+      "no_rerank": {
+        "vector_retrieval_time": 0.0129,
+        "rerank_time": 0.0,
+        "generation_time": 1.5254,
+        "total_time": 1.5383,
+        "retrieved_count": 5,
+        "total_tokens": 887,
+        "answer_preview": "根据提供的知识库信息，我无法回答这个问题。"
+      },
+      "with_rerank": {
+        "vector_retrieval_time": 0.0116,
+        "rerank_time": 3.0447,
+        "generation_time": 1.4957,
+        "total_time": 4.552,
+        "retrieved_before_rerank": 10,
+        "retrieved_count": 5,
+        "rerank_scores": [
+          0.0001,
+          0.0001,
+          0.0001,
+          0.0001,
+          0.0001
+        ],
+        "total_tokens": 879,
+        "answer_preview": "根据提供的知识库信息，我无法回答这个问题。"
+      }
+    },
+    {
+      "id": 46,
+      "question": "HTTP/3协议相比HTTP/2在传输层做了哪些根本性的变化？",
+      "type": "unrelated",
+      "no_rerank": {
+        "vector_retrieval_time": 0.0096,
+        "rerank_time": 0.0,
+        "generation_time": 1.3867,
+        "total_time": 1.3963,
+        "retrieved_count": 5,
+        "total_tokens": 580,
+        "answer_preview": "根据提供的知识库信息，我无法回答这个问题。"
+      },
+      "with_rerank": {
+        "vector_retrieval_time": 0.0097,
+        "rerank_time": 3.0442,
+        "generation_time": 1.6318,
+        "total_time": 4.6857,
+        "retrieved_before_rerank": 10,
+        "retrieved_count": 5,
+        "rerank_scores": [
+          0.0005,
+          0.0005,
+          0.0005,
+          0.0005,
+          0.0005
+        ],
+        "total_tokens": 590,
+        "answer_preview": "根据提供的知识库信息，我无法回答这个问题。所有上下文内容均涉及PCB硬件设计中的信号完整性分析，未提及HTTP/3或HTTP/2协议的相关信息。"
+      }
+    },
+    {
+      "id": 47,
+      "question": "锂电池的充放电过程中，锂离子在正负极之间如何迁移？",
+      "type": "unrelated",
+      "no_rerank": {
+        "vector_retrieval_time": 0.0133,
+        "rerank_time": 0.0,
+        "generation_time": 2.1379,
+        "total_time": 2.1512,
+        "retrieved_count": 5,
+        "total_tokens": 603,
+        "answer_preview": "根据提供的知识库信息，我无法回答这个问题。上下文内容仅涉及GPU供电系统（VRM）的电流变化，未提及锂电池的充放电原理或锂离子迁移机制。"
+      },
+      "with_rerank": {
+        "vector_retrieval_time": 0.01,
+        "rerank_time": 2.9223,
+        "generation_time": 1.8006,
+        "total_time": 4.7329,
+        "retrieved_before_rerank": 10,
+        "retrieved_count": 5,
+        "rerank_scores": [
+          0.0001,
+          0.0001,
+          0.0001,
+          0.0001,
+          0.0001
+        ],
+        "total_tokens": 592,
+        "answer_preview": "根据提供的知识库信息，我无法回答这个问题。所有文档内容均涉及GPU供电系统的数学计算，未提及锂电池的充放电原理。"
+      }
+    },
+    {
+      "id": 48,
+      "question": "虚拟内存的分页机制中，页表和多级页表如何实现地址转换？",
+      "type": "unrelated",
+      "no_rerank": {
+        "vector_retrieval_time": 0.0128,
+        "rerank_time": 0.0,
+        "generation_time": 1.4881,
+        "total_time": 1.5009,
+        "retrieved_count": 5,
+        "total_tokens": 588,
+        "answer_preview": "根据提供的知识库信息，我无法回答这个问题。"
+      },
+      "with_rerank": {
+        "vector_retrieval_time": 0.0109,
+        "rerank_time": 3.1184,
+        "generation_time": 2.2457,
+        "total_time": 5.375,
+        "retrieved_before_rerank": 10,
+        "retrieved_count": 5,
+        "rerank_scores": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "total_tokens": 877,
+        "answer_preview": "根据提供的知识库信息，我无法回答这个问题。上下文内容全部涉及GPU与显存的高速数字电路设计，未包含任何关于虚拟内存、分页机制或页表地址转换的信息。"
+      }
+    },
+    {
+      "id": 49,
+      "question": "在经典控制理论中，PID控制器的三个参数分别对系统响应有何影响？",
+      "type": "unrelated",
+      "no_rerank": {
+        "vector_retrieval_time": 0.0125,
+        "rerank_time": 0.0,
+        "generation_time": 1.7402,
+        "total_time": 1.7527,
+        "retrieved_count": 5,
+        "total_tokens": 952,
+        "answer_preview": "根据提供的知识库信息，我无法回答这个问题。上下文内容主要涉及GPU供电网络的目标阻抗、环路补偿和纹波控制，未提及PID控制器的具体参数及其对系统响应的影响。"
+      },
+      "with_rerank": {
+        "vector_retrieval_time": 0.0116,
+        "rerank_time": 5.4634,
+        "generation_time": 1.624,
+        "total_time": 7.099,
+        "retrieved_before_rerank": 10,
+        "retrieved_count": 5,
+        "rerank_scores": [
+          0.0118,
+          0.0118,
+          0.0118,
+          0.0118,
+          0.0118
+        ],
+        "total_tokens": 903,
+        "answer_preview": "根据提供的知识库信息，我无法回答这个问题。"
+      }
+    },
+    {
+      "id": 50,
+      "question": "核反应堆中，控制棒和慢化剂分别起什么作用？",
+      "type": "unrelated",
+      "no_rerank": {
+        "vector_retrieval_time": 0.0138,
+        "rerank_time": 0.0,
+        "generation_time": 1.2169,
+        "total_time": 1.2307,
+        "retrieved_count": 5,
+        "total_tokens": 964,
+        "answer_preview": "根据提供的知识库信息，我无法回答这个问题。"
+      },
+      "with_rerank": {
+        "vector_retrieval_time": 0.0105,
+        "rerank_time": 3.2804,
+        "generation_time": 2.0916,
+        "total_time": 5.3825,
+        "retrieved_before_rerank": 10,
+        "retrieved_count": 5,
+        "rerank_scores": [
+          0.0038,
+          0.0038,
+          0.0038,
+          0.0038,
+          0.0038
+        ],
+        "total_tokens": 1030,
+        "answer_preview": "根据提供的知识库信息，我无法回答这个问题。上下文内容仅涉及电子设备散热中的真空腔均热板（VC）技术，并未提及核反应堆的控制棒和慢化剂的作用。"
+      }
+    }
+  ],
+  "timestamp": "2026-07-02 14:50:35"
+}

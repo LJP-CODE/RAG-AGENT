@@ -1,0 +1,29 @@
+# ============================================================
+# AI Agent — Docker Compose 服务编排
+# ============================================================
+
+services:
+  agent-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ai-agent-api
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    environment:
+      - CONFIG_PATH=config.yaml
+    volumes:
+      # 持久化数据（重启不丢失）
+      - ./data/chroma_db:/app/data/chroma_db
+      - ./data/long_term_memory:/app/data/long_term_memory
+      - ./data/agent_logs:/app/data/agent_logs
+      # 配置文件热更新
+      - ./config.yaml:/app/config.yaml
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3

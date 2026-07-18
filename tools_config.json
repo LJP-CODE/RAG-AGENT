@@ -1,0 +1,12 @@
+{
+  "tools": [
+    {
+      "name": "Calculator",
+      "description": "数学计算"
+    },
+    {
+      "name": "Get_Time",
+      "description": "获取当前时间"
+    }
+  ]
+}

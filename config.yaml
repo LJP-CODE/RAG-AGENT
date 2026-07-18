@@ -1,0 +1,108 @@
+# ============================================================
+# AI Agent — 应用配置
+# 所有敏感信息（API Key、Token 等）统一通过 .env 环境变量管理
+# 本文件仅包含非敏感的应用配置
+# ============================================================
+
+# ── 应用服务器 ──
+app:
+  host: "0.0.0.0"
+  port: 8000
+  reload: false
+
+# ── RAG 知识库 ──
+rag:
+  knowledge_path: "data/knowledge/knowledge.txt"
+  chunk_size: 256
+  chunk_overlap: 128
+  embedding_model: "BAAI/bge-small-zh-v1.5"
+  top_k: 5
+
+# ── 数据目录 ──
+# Linux/Docker: /app/data/... 匹配 volume 挂载点
+# Windows 本地开发则自动 fallback 到相对路径
+data:
+  chroma_db_dir: "/app/data/chroma_db"
+  long_term_memory_dir: "/app/data/long_term_memory"
+  agent_logs_dir: "/app/data/agent_logs"
+  audit_log_dir: "/app/data/audit_logs"
+
+# ── LLM 配置（API Key 通过环境变量 DEEPSEEK_API_KEY 传入）──
+llm:
+  model: "deepseek-chat"
+  base_url: "https://api.deepseek.com"
+  temperature: 0.1
+
+# ── Agent 配置 ──
+agent:
+  max_iterations: 15
+  temperature: 0.1
+  verbose: true
+
+# ── 安全护栏配置 ──
+security:
+  # 输入/输出长度限制
+  max_input_length: 2000
+  max_output_length: 8000
+
+  # 限流控制
+  rate_limit_per_minute: 10
+  rate_limit_per_hour: 100
+
+  # 单会话最大调用次数
+  max_calls_per_session: 50
+
+  # 异常行为检测：连续触发安全规则 N 次后自动冻结
+  freeze_trigger_count: 3
+  # 冻结时长（分钟）
+  freeze_duration_minutes: 5
+
+  # 审计日志保留天数
+  audit_log_retention_days: 30
+
+  # 敏感词列表（可自行增删）
+  # 匹配规则：输入中包含任一敏感词即触发告警
+  sensitive_words:
+    # ── 政治敏感 ──
+    - "法轮功"
+    - "六四"
+    - "天安门"
+    - "台独"
+    - "藏独"
+    - "疆独"
+    - "港独"
+    # ── 色情敏感 ──
+    - "色情"
+    - "淫秽"
+    - "成人影片"
+    - "裸聊"
+    - "约炮"
+    - "嫖娼"
+    # ── 暴力敏感 ──
+    - "杀人"
+    - "恐怖袭击"
+    - "炸弹制作"
+    - "枪支买卖"
+    - "毒品"
+    - "冰毒"
+    # ── 赌博/诈骗 ──
+    - "赌博"
+    - "博彩"
+    - "六合彩"
+    - "刷单"
+    - "传销"
+
+# ── 向量记忆配置 ──
+memory:
+  persist_dir: "./data/vector_memory"
+  max_history_days: 30
+  similarity_threshold: 0.65
+
+# ── 工具配置 ──
+tools:
+  web_search:
+    max_results: 5
+    timeout_seconds: 10
+  read_webpage:
+    max_chars: 3000
+    timeout_seconds: 15

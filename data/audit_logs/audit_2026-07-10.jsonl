@@ -1,0 +1,7 @@
+{"timestamp": "2026-07-10T18:04:10.025162", "session_id": "test-user-001", "event_type": "input_violation", "rule": "sql_drop_table", "detail": "触发安全规则: sql_drop_table", "snippet": "DROP TABLE users;"}
+{"timestamp": "2026-07-10T18:04:10.027904", "session_id": "test-user-001", "event_type": "input_violation", "rule": "sql_drop_table", "detail": "触发安全规则: sql_drop_table", "snippet": "DROP TABLE users;"}
+{"timestamp": "2026-07-10T18:04:10.029136", "session_id": "test-user-001", "event_type": "input_violation", "rule": "sql_drop_table", "detail": "触发安全规则: sql_drop_table", "snippet": "DROP TABLE users;"}
+{"timestamp": "2026-07-10T18:04:10.030413", "session_id": "test-user-001", "event_type": "freeze", "rule": "auto_freeze", "detail": "连续 3 次触发安全规则，冻结 5 分钟", "snippet": "DROP TABLE users;"}
+{"timestamp": "2026-07-10T18:04:10.032017", "session_id": "test-user-001", "event_type": "input_violation", "rule": "sql_drop_table", "detail": "触发安全规则: sql_drop_table", "snippet": "DROP TABLE users;"}
+{"timestamp": "2026-07-10T18:04:10.033254", "session_id": "test-user-001", "event_type": "freeze", "rule": "auto_freeze", "detail": "连续 3 次触发安全规则，冻结 5 分钟", "snippet": "DROP TABLE users;"}
+{"timestamp": "2026-07-10T18:04:10.034394", "session_id": "test-user-001", "event_type": "unfreeze", "rule": "manual_unfreeze", "detail": "管理员手动解冻", "snippet": ""}
