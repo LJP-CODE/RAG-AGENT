@@ -62,3 +62,4 @@ checkpoint_results.json
 
 # ── Docker ──
 .dockerignore
+chroma_db/
