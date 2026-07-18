@@ -67,30 +67,28 @@ curl -X POST http://localhost:8000/ask \
 ## 项目结构
 ```
 rag-agent/
-├── app/                    # 核心代码
-│   ├── agent_api.py        # Agent API 服务
-│   ├── agent_system.py     # Agent 核心编排
-│   ├── agent_guardrails.py # 安全护栏
-│   ├── agent_monitor.py    # 监控日志
-│   ├── memory_store.py     # 记忆存储
-│   ├── vector_memory.py    # 向量记忆
-│   ├── multi_agent.py      # 多智能体协作
-│   ├── rag_system.py       # RAG 系统
-│   ├── tool_registry.py    # 工具注册中心
-│   ├── web_tools.py        # Web 工具集
-│   └── desktop_client.py   # 桌面客户端
-├── data/                   # 数据目录
-│   ├── knowledge/          # 知识库文件
-│   ├── chroma_db/          # Chroma 向量数据库（运行时生成）
-│   ├── agent_logs/         # Agent 运行日志
-│   └── long_term_memory/   # 长期记忆持久化
-├── tests/                  # 测试
-├── scripts/                # 工具脚本
-├── .env.example            # 环境变量模板
-├── config.yaml             # 应用配置文件
-├── requirements.txt        # Python 依赖
-├── Dockerfile              # Docker 镜像
-└── docker-compose.yml      # 一键部署
+├── app/
+│   ├── agent_api.py
+│   ├── agent_system.py
+│   ├── agent_guardrails.py
+│   ├── agent_monitor.py
+│   ├── memory_store.py
+│   ├── vector_memory.py
+│   ├── multi_agent.py
+│   ├── rag_system.py
+│   ├── tool_registry.py
+│   ├── web_tools.py
+│   └── desktop_client.py
+├── data/
+│   ├── knowledge/
+│   └── chroma_db/
+├── tests/
+├── scripts/
+├── .env.example
+├── config.yaml
+├── requirements.txt
+├── Dockerfile
+└── docker-compose.yml
 ```
 
 性能数据
