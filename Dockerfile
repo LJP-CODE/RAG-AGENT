@@ -28,6 +28,7 @@ RUN pip install --no-cache-dir -r requirements.txt -i https://pypi.tuna.tsinghua
 # ── 复制应用代码 ──
 COPY app/ ./app/
 COPY data/ ./data/
+COPY config_loader.py .
 
 # ── 复制配置文件（非敏感，可挂载覆盖）──
 COPY config.yaml .

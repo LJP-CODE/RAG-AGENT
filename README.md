@@ -38,9 +38,25 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
+Windows 可直接双击 `start.bat`；macOS/Linux 可执行：
+```bash
+chmod +x start.sh
+./start.sh
+```
+
 如果下载慢，可使用国内镜像源：
 ```bash
 pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
+```
+
+运行 Streamlit Web 界面或 PyQt5 桌面客户端时，安装可选界面依赖：
+```bash
+pip install -r requirements-ui.txt
+```
+
+运行 pytest 集成测试时，安装开发依赖：
+```bash
+pip install -r requirements-dev.txt
 ```
 
 ### 4. 配置环境变量
@@ -56,7 +72,7 @@ SERPAPI_API_KEY=你的SerpApi密钥（可选）
 
 ### 5. 启动后端服务
 ```bash
-uvicorn main:app --reload
+python -m uvicorn app.agent_api:app --reload --host 0.0.0.0 --port 8000
 ```
 
 启动成功后，访问 `http://localhost:8000/docs` 可以看到 Swagger API 文档。
@@ -77,45 +93,48 @@ python app/desktop_client.py
 ```bash
 curl -X POST http://localhost:8000/ask \
   -H "Content-Type: application/json" \
+  -H "X-API-Key: sk-key1" \
   -d '{"question": "显卡PCB一般多少层？"}'
 ```
+
+未设置 `API_KEYS` 时服务为开放模式；设置后，问答、会话、安全和配置管理接口均需要 `X-API-Key`。`/health` 始终用于健康检查。
 
 ## 项目结构
 ```
 rag-agent/
 ├── app/
 │   ├── agent_api.py
-│   ├── agent_system.py
 │   ├── agent_guardrails.py
 │   ├── agent_monitor.py
-│   ├── memory_store.py
-│   ├── vector_memory.py
+│   ├── desktop_client.py
 │   ├── multi_agent.py
 │   ├── rag_system.py
+│   ├── session_manager.py
+│   ├── streamlit_ui.py
 │   ├── tool_registry.py
+│   ├── vector_memory.py
 │   ├── web_tools.py
-│   └── desktop_client.py
+│   └── __init__.py
 ├── data/
 │   ├── knowledge/
-│   └── chroma_db/
+│   └── sessions/
 ├── tests/
 ├── scripts/
 ├── .env.example
+├── config_loader.py
 ├── config.yaml
 ├── requirements.txt
+├── requirements-ui.txt
+├── requirements-dev.txt
 ├── Dockerfile
 └── docker-compose.yml
 ```
-性能数据
-指标	数据
-平均响应时间	16ms
-Token 优化	降低 58%（4,778 → 2,015）
-知识库大小	1,890 字符
-文档块数	13
 
-性能数据
-指标	数据
-平均响应时间	16ms
-Token 优化	降低 58%（4,778 → 2,015）
-知识库大小	1,890 字符
-文档块数	13
+## 性能数据
+
+| 指标 | 数据 |
+| --- | --- |
+| 平均响应时间 | 16ms |
+| Token 优化 | 降低 58%（4,778 → 2,015） |
+| 知识库大小 | 1,890 字符 |
+| 文档块数 | 13 |

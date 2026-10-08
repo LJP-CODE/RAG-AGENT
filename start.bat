@@ -26,9 +26,9 @@ if exist ".venv\Scripts\activate.bat" (
     echo [2/4] 未找到 .venv，使用系统 Python
 )
 
-REM ── 安装依赖（如需要）──
+REM ── 安装项目依赖（如需要）──
 echo [3/4] 检查依赖...
-pip install -q sse-starlette>=2.1.0 2>nul
+python -m pip install -r requirements.txt
 
 REM ── 启动服务 ──
 echo [4/4] 启动服务...
@@ -41,6 +41,6 @@ echo   按 Ctrl+C 停止服务
 echo ============================================================
 echo.
 
-uvicorn app.agent_api:app --reload --host 0.0.0.0 --port 8000
+python -m uvicorn app.agent_api:app --reload --host 0.0.0.0 --port 8000
 
 pause

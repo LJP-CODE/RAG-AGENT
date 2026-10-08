@@ -134,18 +134,19 @@ class DataConfig:
     """数据目录配置。"""
     def __init__(self, data: dict):
         raw = dict(data)
-        # Windows 本地开发：自动将 Docker 绝对路径替换为本地相对路径
-        if os.name == "nt":
-            for key, default_path in [
-                ("chroma_db_dir", "./chroma_db"),
-                ("long_term_memory_dir", "./long_term_memory"),
-                ("agent_logs_dir", "./agent_logs"),
-                ("audit_log_dir", "./audit_logs"),
-            ]:
-                val = raw.get(key, default_path)
-                if isinstance(val, str) and (val.startswith("/") or
-                   (len(val) > 1 and val[1] == ":")):
-                    raw[key] = default_path
+        # config.yaml also serves Docker, where /app is the container root.
+        # During local execution that mount point is absent, so map container
+        # paths back into the repository's data directory on every platform.
+        docker_runtime = Path("/.dockerenv").exists()
+        for key, default_path in [
+            ("chroma_db_dir", "./chroma_db"),
+            ("long_term_memory_dir", "./long_term_memory"),
+            ("agent_logs_dir", "./agent_logs"),
+            ("audit_log_dir", "./audit_logs"),
+        ]:
+            val = raw.get(key, default_path)
+            if isinstance(val, str) and val.startswith("/app/") and not docker_runtime:
+                raw[key] = str(Path(__file__).resolve().parent / val.removeprefix("/app/"))
 
         self.chroma_db_dir: str = raw.get("chroma_db_dir", "./data/chroma_db")
         self.long_term_memory_dir: str = raw.get("long_term_memory_dir", "./data/long_term_memory")

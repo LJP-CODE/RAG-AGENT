@@ -1009,14 +1009,14 @@ async def ask_question_stream(request: AskRequest, api_key: str = Depends(verify
 # ============================================================
 
 @app.get("/sessions", response_model=List[SessionSummary])
-async def list_sessions():
+async def list_sessions(api_key: str = Depends(verify_api_key)):
     """获取所有历史会话列表（按更新时间倒序）。"""
     mgr = get_session_manager()
     return mgr.list_sessions()
 
 
 @app.post("/sessions", response_model=CreateSessionResponse, status_code=201)
-async def create_session():
+async def create_session(api_key: str = Depends(verify_api_key)):
     """新建一个空白会话，返回会话 ID。"""
     mgr = get_session_manager()
     session = mgr.create_session()
@@ -1028,7 +1028,7 @@ async def create_session():
 
 
 @app.get("/sessions/{session_id}", response_model=SessionDetail)
-async def get_session_detail(session_id: str):
+async def get_session_detail(session_id: str, api_key: str = Depends(verify_api_key)):
     """获取指定会话的完整数据（含所有消息）。"""
     mgr = get_session_manager()
     data = mgr.get_session(session_id)
@@ -1044,7 +1044,7 @@ async def get_session_detail(session_id: str):
 
 
 @app.delete("/sessions/{session_id}")
-async def delete_session(session_id: str):
+async def delete_session(session_id: str, api_key: str = Depends(verify_api_key)):
     """删除指定会话的持久化数据（同时清除内存中的对话记忆和限流计数）。"""
     mgr = get_session_manager()
     # 删除持久化文件
@@ -1082,7 +1082,7 @@ async def health_check():
 # ============================================================
 
 @app.delete("/session/{session_id}")
-async def clear_session(session_id: str):
+async def clear_session(session_id: str, api_key: str = Depends(verify_api_key)):
     """清除指定会话的对话记忆和限流计数。"""
     async with sessions_lock:
         if session_id in sessions:
@@ -1105,7 +1105,7 @@ async def clear_session(session_id: str):
 # ============================================================
 
 @app.get("/security/status/{session_id}", response_model=SecurityStatus)
-async def get_security_status(session_id: str):
+async def get_security_status(session_id: str, api_key: str = Depends(verify_api_key)):
     """查询指定会话的安全状态（违规计数、冻结状态、调用次数）。"""
     summary = guardrails.get_violation_summary(session_id)
     return SecurityStatus(**summary)
@@ -1116,7 +1116,7 @@ async def get_security_status(session_id: str):
 # ============================================================
 
 @app.get("/security/frozen", response_model=FrozenSessionsResponse)
-async def get_frozen_sessions():
+async def get_frozen_sessions(api_key: str = Depends(verify_api_key)):
     """查询所有当前处于冻结状态的会话。"""
     frozen = guardrails.get_frozen_sessions()
     return FrozenSessionsResponse(
@@ -1130,7 +1130,7 @@ async def get_frozen_sessions():
 # ============================================================
 
 @app.post("/security/unfreeze/{session_id}")
-async def unfreeze_session(session_id: str):
+async def unfreeze_session(session_id: str, api_key: str = Depends(verify_api_key)):
     """手动解冻指定会话（管理员操作）。"""
     if guardrails.unfreeze_session(session_id):
         return {
@@ -1148,7 +1148,7 @@ async def unfreeze_session(session_id: str):
 # ============================================================
 
 @app.post("/config/reload")
-async def reload_config():
+async def reload_config(api_key: str = Depends(verify_api_key)):
     """重新加载 config.yaml 配置（热更新）。"""
     global config, guardrails
     cfg_path = os.getenv("CONFIG_PATH", "config.yaml")

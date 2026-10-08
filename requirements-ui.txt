@@ -1,0 +1,4 @@
+# Optional dependencies for the Streamlit web UI and PyQt desktop client.
+-r requirements.txt
+streamlit>=1.40.0
+PyQt5>=5.15.0
