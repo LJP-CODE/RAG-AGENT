@@ -89,6 +89,11 @@ streamlit run app/streamlit_ui.py
 python app/desktop_client.py
 ```
 
+请先确认终端位于项目根目录 `RAG-AGENT`。也可以直接使用：
+
+- Windows：双击 `desktop.bat`
+- macOS/Linux：执行 `./desktop.sh`
+
 ### 8. 测试
 ```bash
 curl -X POST http://localhost:8000/ask \
